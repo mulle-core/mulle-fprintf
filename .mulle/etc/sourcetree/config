@@ -1,0 +1,1 @@
+mulle-sprintf;${MULLE_SPRINTF_NODETYPE:-tar};no-cmake-loader,no-cmake-searchpath,no-import,no-singlephase;9B1EEDAF-5103-4E5C-B280-25EB86FCA40E;${MULLE_SPRINTF_URL:-https://github.com/mulle-core/mulle-sprintf/archive/${MULLE_TAG}.tar.gz};${MULLE_SPRINTF_BRANCH};${MULLE_SPRINTF_TAG:-latest};;
