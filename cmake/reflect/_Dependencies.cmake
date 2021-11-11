@@ -14,7 +14,7 @@ endif()
 #
 # Generated from sourcetree: 9B1EEDAF-5103-4E5C-B280-25EB86FCA40E;mulle-sprintf;no-cmake-loader,no-cmake-searchpath,no-import,no-singlephase;
 # Disable with : `mulle-sourcetree mark mulle-sprintf no-link`
-# Disable for this platform: `mulle-sourcetree mark mulle-sprintf no-cmake-platform-linux`
+# Disable for this platform: `mulle-sourcetree mark mulle-sprintf no-cmake-platform-darwin`
 #
 if( NOT MULLE_SPRINTF_LIBRARY)
    find_library( MULLE_SPRINTF_LIBRARY NAMES ${CMAKE_STATIC_LIBRARY_PREFIX}mulle-sprintf${CMAKE_STATIC_LIBRARY_SUFFIX} mulle-sprintf NO_CMAKE_SYSTEM_PATH NO_SYSTEM_ENVIRONMENT_PATH)
