@@ -34,16 +34,23 @@ static inline unsigned int   mulle_fprintf_get_version_patch( void)
    return( MULLE_FPRINTF_VERSION & 0xFF);
 }
 
-
-extern uint32_t   mulle_fprintf_get_version( void);
+MULLE_FPRINTF_EXTERN_GLOBAL
+uint32_t   mulle_fprintf_get_version( void);
 
 
 #include <stdio.h>
 #include <stdarg.h>
 
+MULLE_FPRINTF_EXTERN_GLOBAL
 int   mulle_printf( char *format, ...);
+
+MULLE_FPRINTF_EXTERN_GLOBAL
 int   mulle_vprintf( char *format, va_list args);
+
+MULLE_FPRINTF_EXTERN_GLOBAL
 int   mulle_fprintf( FILE *fp, char *format, ...);
+
+MULLE_FPRINTF_EXTERN_GLOBAL
 int   mulle_vfprintf( FILE *fp, char *format, va_list args);
 
 
