@@ -1,6 +1,9 @@
 cmake_minimum_required( VERSION 3.1)
 
 project( mulle-fprintf C)
+
+add_definitions( -DMULLE_FPRINTF_EXTERN_GLOBAL=extern)
+
 #
 # Turn a "Library" into an "Executable"
 # * touch src/main.m
