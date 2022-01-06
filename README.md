@@ -22,6 +22,11 @@ mulle-sprintf must be "force" linked (all-load) with mulle-fprintf,
 otherwise the plugin conversions don't appear. mulle-sde will do this automatically.
 
 
+### You are here
+
+![Overview](overview.dot.svg)
+
+
 ## Add
 
 Use [mulle-sde](//github.com/mulle-sde) to add mulle-fprintf to your project:

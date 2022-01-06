@@ -36,6 +36,7 @@ set( PUBLIC_GENERATED_HEADERS
 src/reflect/_mulle-fprintf-include.h
 src/reflect/_mulle-fprintf-include-public.h
 src/reflect/_mulle-fprintf-provide.h
+src/reflect/_mulle-fprintf-versioncheck.h
 )
 
 #
