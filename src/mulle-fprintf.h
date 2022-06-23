@@ -14,7 +14,7 @@
  *
  *  version:  major, minor, patch
  */
-#define MULLE_FPRINTF_VERSION  ((0 << 20) | (0 << 8) | 1)
+#define MULLE_FPRINTF_VERSION  ((0 << 20) | (1 << 8) | 0)
 
 
 static inline unsigned int   mulle_fprintf_get_version_major( void)
@@ -34,25 +34,36 @@ static inline unsigned int   mulle_fprintf_get_version_patch( void)
    return( MULLE_FPRINTF_VERSION & 0xFF);
 }
 
-MULLE_FPRINTF_EXTERN_GLOBAL
+MULLE_FPRINTF_GLOBAL
 uint32_t   mulle_fprintf_get_version( void);
 
 
 #include <stdio.h>
 #include <stdarg.h>
 
-MULLE_FPRINTF_EXTERN_GLOBAL
+MULLE_FPRINTF_GLOBAL
 int   mulle_printf( char *format, ...);
 
-MULLE_FPRINTF_EXTERN_GLOBAL
-int   mulle_vprintf( char *format, va_list args);
-
-MULLE_FPRINTF_EXTERN_GLOBAL
+MULLE_FPRINTF_GLOBAL
 int   mulle_fprintf( FILE *fp, char *format, ...);
 
-MULLE_FPRINTF_EXTERN_GLOBAL
+MULLE_FPRINTF_GLOBAL
 int   mulle_vfprintf( FILE *fp, char *format, va_list args);
 
+MULLE_FPRINTF_GLOBAL
+int   mulle_mvfprintf( FILE *fp, char *format, mulle_vararg_list arguments);
+
+static inline
+int   mulle_vprintf( char *format, va_list args)
+{
+   return( mulle_vfprintf( stdout, format, args));
+}
+
+static inline
+int   mulle_mvprintf( char *format, mulle_vararg_list arguments)
+{
+   return( mulle_mvfprintf( stdout, format, arguments));
+}
 
 /*
  * The following files are auto-generated.
