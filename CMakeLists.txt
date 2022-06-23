@@ -1,8 +1,7 @@
-cmake_minimum_required( VERSION 3.1)
+cmake_minimum_required( VERSION 3.15)
 
 project( mulle-fprintf C)
 
-add_definitions( -DMULLE_FPRINTF_EXTERN_GLOBAL=extern)
 
 #
 # Turn a "Library" into an "Executable"
@@ -45,9 +44,7 @@ elseif( "${MULLE_PROJECT_TYPE}" STREQUAL "Framework")
    endif()
 
    include( Framework)
-   set_target_properties( "${FRAMEWORK_NAME}" PROPERTIES
-     FRAMEWORK_VERSION A
-   )
+
 
    #
    # You usually don't want to link static libraries into a Framework, except
