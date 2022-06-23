@@ -29,8 +29,14 @@
 
 #include "_mulle-fprintf-include.h"
 
-#ifndef MULLE_FPRINTF_EXTERN_GLOBAL
-# define MULLE_FPRINTF_EXTERN_GLOBAL MULLE_C_EXTERN_GLOBAL
+#ifdef MULLE_FPRINTF_BUILD
+# define MULLE_FPRINTF_GLOBAL    MULLE_C_GLOBAL
+#else
+# if defined( MULLE_FPRINTF_INCLUDE_DYNAMIC) || (defined( MULLE_INCLUDE_DYNAMIC) && ! defined( MULLE_FPRINTF_INCLUDE_STATIC))
+#  define MULLE_FPRINTF_GLOBAL   MULLE_C_EXTERN_GLOBAL
+# else
+#  define MULLE_FPRINTF_GLOBAL   extern
+# endif
 #endif
 
 
