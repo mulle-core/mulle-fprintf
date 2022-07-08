@@ -5,7 +5,7 @@
 
 Function         | Description
 -----------------|-------------
-`mulle_printf`   | Like [printf](https://www.cplusplus.com/reference/cstdio/printf/) prints to **stdout**
+`mulle_printf`   | Like [printf](//www.cplusplus.com/reference/cstdio/printf/) prints to **stdout**
 `mulle_vprintf`  | `<stdarg.h>` variant of `mulle_printf`
 `mulle_fprintf`  | Prints to `FILE`
 `mulle_vfprintf` | `<stdarg.h>` variant of `mulle_fprintf`
@@ -13,7 +13,7 @@ Function         | Description
 
 | Release Version
 |-----------------------------------
-[![Build Status](https://travis-ci.org/mulle-core/mulle-fprintf.svg?branch=release)](https://travis-ci.org/mulle-core/mulle-fprintf) | ![Mulle kybernetiK tag](https://img.shields.io/github/tag/mulle-core/mulle-fprintf.svg?branch=release) [![Build Status](https://travis-ci.org/mulle-core/mulle-fprintf.svg?branch=release)](https://travis-ci.org/mulle-core/mulle-fprintf)
+[![Build Status](//github.com/mulle-core/mulle-fprintf/CI/badge.svg?branch=release)](//github.com/mulle-core/mulle-fprintf) | ![Mulle kybernetiK tag](//img.shields.io/github/tag/mulle-core/mulle-fprintf.svg?branch=release) [![Build Status](//github.com/mulle-core/mulle-fprintf/CI/badge.svg?branch=release)](//github.com/mulle-core/mulle-fprintf)
 
 
 ### Memo
@@ -44,7 +44,7 @@ and all its dependencies:
 
 ```
 mulle-sde install --prefix /usr/local \
-   https://github.com/mulle-core/mulle-fprintf/archive/latest.tar.gz
+   //github.com/mulle-core/mulle-fprintf/archive/latest.tar.gz
 ```
 
 ### Manual Installation
