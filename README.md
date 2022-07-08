@@ -13,7 +13,7 @@ Function         | Description
 
 | Release Version
 |-----------------------------------
-[![Build Status](//github.com/mulle-core/mulle-fprintf/CI/badge.svg?branch=release)](//github.com/mulle-core/mulle-fprintf) | ![Mulle kybernetiK tag](//img.shields.io/github/tag/mulle-core/mulle-fprintf.svg?branch=release) [![Build Status](//github.com/mulle-core/mulle-fprintf/CI/badge.svg?branch=release)](//github.com/mulle-core/mulle-fprintf)
+[![Build Status](https://github.com/mulle-core/mulle-fprintf/CI/badge.svg?branch=release)](//github.com/mulle-core/mulle-fprintf) | ![Mulle kybernetiK tag](https://img.shields.io/github/tag/mulle-core/mulle-fprintf.svg?branch=release) [![Build Status](https://github.com/mulle-core/mulle-fprintf/CI/badge.svg?branch=release)](//github.com/mulle-core/mulle-fprintf)
 
 
 ### Memo
