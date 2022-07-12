@@ -13,8 +13,7 @@ Function         | Description
 
 | Release Version
 |-----------------------------------
-[![Build Status](https://github.com/mulle-core/mulle-fprintf/CI/badge.svg?branch=release)](//github.com/mulle-core/mulle-fprintf) | ![Mulle kybernetiK tag](https://img.shields.io/github/tag/mulle-core/mulle-fprintf.svg?branch=release) [![Build Status](https://github.com/mulle-core/mulle-fprintf/CI/badge.svg?branch=release)](//github.com/mulle-core/mulle-fprintf)
-
+|[![Build Status](https://github.com/mulle-core/mulle-fprintf/workflows/CI/badge.svg?branch=release)](//github.com/mulle-core/mulle-fprintf)  ![Mulle kybernetiK tag](https://img.shields.io/github/tag/mulle-core/mulle-fprintf/workflows/CI/badge.svg?branch=release)
 
 ### Memo
 
@@ -31,7 +30,7 @@ otherwise the plugin conversions don't appear. mulle-sde will do this automatica
 
 Use [mulle-sde](//github.com/mulle-sde) to add mulle-fprintf to your project:
 
-``` console
+``` sh
 mulle-sde dependency add --c --github mulle-core mulle-fprintf
 ```
 
@@ -42,7 +41,7 @@ mulle-sde dependency add --c --github mulle-core mulle-fprintf
 Use [mulle-sde](//github.com/mulle-sde) to build and install mulle-fprintf
 and all its dependencies:
 
-```
+``` sh
 mulle-sde install --prefix /usr/local \
    //github.com/mulle-core/mulle-fprintf/archive/latest.tar.gz
 ```
@@ -58,7 +57,7 @@ Requirements                                           | Description
 
 Install into `/usr/local`:
 
-```
+``` sh
 mkdir build 2> /dev/null
 (
    cd build ;
