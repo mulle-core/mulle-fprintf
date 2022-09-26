@@ -33,3 +33,5 @@ tmp.*/
 *.sublime-workspace
 .mulle-make-build-dir
 version.old
+cmake-build-debug
+.ackrc

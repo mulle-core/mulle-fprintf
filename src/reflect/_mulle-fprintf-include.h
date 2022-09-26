@@ -16,13 +16,13 @@
 
 // You can tweak the following #include with these commands.
 // (Use 9B1EEDAF-5103-4E5C-B280-25EB86FCA40E instead of mulle-sprintf if there are duplicate entries)
-//    remove:             `mulle-sde dependency mark mulle-sprintf no-header`
-//    rename:             `mulle-sde dependency|library set mulle-sprintf include whatever.h`
-//    reorder:            `mulle-sde dependency move mulle-sprintf <up|down>`
+//    remove #include:: `mulle-sde dependency mark mulle-sprintf no-header`
+//    rename:              `mulle-sde dependency|library set mulle-sprintf include whatever.h`
+//    reorder:             `mulle-sde dependency move mulle-sprintf <up|down>`
 //    toggle #include:    `mulle-sde dependency mark mulle-sprintf [no-]import`
-//    toggle public:      `mulle-sde dependency mark mulle-sprintf [no-]public`
-//    toggle optional:    `mulle-sde dependency mark mulle-sprintf [no-]require`
-//    remove for platform:`mulle-sde dependency mark mulle-sprintf no-platform-<uname>`
+//    toggle public:       `mulle-sde dependency mark mulle-sprintf [no-]public`
+//    toggle optional:     `mulle-sde dependency mark mulle-sprintf [no-]require`
+//    remove for platform: `mulle-sde dependency mark mulle-sprintf no-platform-<uname>`
 //        (use `mulle-sourcetree-to-c --unames` to list known values)
 #include <mulle-sprintf/mulle-sprintf.h>   // mulle-sprintf
 

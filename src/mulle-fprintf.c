@@ -43,7 +43,6 @@ int   mulle_fprintf( FILE *fp, char *format, ...)
 
 int   mulle_vfprintf( FILE *fp, char *format, va_list args)
 {
-   char                           *s;
    struct mulle_buffer            *buffer;
    struct mulle_flushablebuffer   flushable_buffer;
    char                           storage[ 1024];  // storage for buffer
@@ -69,9 +68,9 @@ int   mulle_vfprintf( FILE *fp, char *format, va_list args)
    return( rval2 ? rval2 : rval);
 }
 
+
 int   mulle_mvfprintf( FILE *fp, char *format, mulle_vararg_list arguments)
 {
-   char                           *s;
    struct mulle_buffer            *buffer;
    struct mulle_flushablebuffer   flushable_buffer;
    char                           storage[ 1024];  // storage for buffer
@@ -80,7 +79,7 @@ int   mulle_mvfprintf( FILE *fp, char *format, mulle_vararg_list arguments)
 
    if( ! fp || ! format)
    {
-   	  errno = EINVAL;
+   	errno = EINVAL;
       return( -1);
    }
 
