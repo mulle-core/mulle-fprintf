@@ -1,0 +1,25 @@
+{
+   "name" : "mulle-fprintf",
+   "version" : "0.1.1",
+   "description" : "🔢 mulle-fprintf marries mulle-sprintf to stdio.h",
+   "homepage" : "https://github.com/mulle-core/mulle-fprintf",
+   "bugs" : "https://github.com/mulle-core/mulle-fprintf/issues",
+   "keywords" : [],
+   "license" : "UNLICENSED",
+   "repository" : {
+      "type" : "git",
+      "url" : "mulle-core/mulle-fprintf"
+   },
+   "dependencies" : {
+      "mulle-sprintf" : "git://github.com/mulle-core/mulle-sprintf",
+      "mulle-buffer" : "git://github.com/mulle-c/mulle-buffer",
+      "mulle-allocator" : "git://github.com/mulle-c/mulle-allocator",
+      "mulle-c11" : "git://github.com/mulle-c/mulle-c11",
+      "mulle-data" : "git://github.com/mulle-c/mulle-data",
+      "farmhash-c" : "git://github.com/mulle-c/farmhash-c",
+      "mulle-utf" : "git://github.com/mulle-c/mulle-utf",
+      "mulle-vararg" : "git://github.com/mulle-c/mulle-vararg",
+      "mulle-thread" : "git://github.com/mulle-concurrent/mulle-thread",
+      "mintomic" : "git://github.com/mulle-concurrent/mintomic"
+   }
+}
