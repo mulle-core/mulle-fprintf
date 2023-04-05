@@ -1,0 +1,22 @@
+{
+   "name" : "mulle-fprintf",
+   "version" : "0.1.1",
+   "description" : "mulle-fprintf marries mulle-sprintf to stdio.h",
+   "keywords" : [],
+   "license" : "BSD-3-Clause",
+   "repo" : "mulle-core/mulle-fprintf",
+   "src" : [
+      "src/generic/include-private.h",
+      "src/generic/include.h",
+      "src/mulle-fprintf.c",
+      "src/mulle-fprintf.h",
+      "src/reflect/_mulle-fprintf-include-private.h",
+      "src/reflect/_mulle-fprintf-include-public.h",
+      "src/reflect/_mulle-fprintf-include.h",
+      "src/reflect/_mulle-fprintf-provide.h",
+      "src/reflect/_mulle-fprintf-versioncheck.h"
+   ],
+   "dependencies" : {
+      "mulle-core/mulle-sprintf": "*"
+   }
+}

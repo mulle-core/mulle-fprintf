@@ -1,0 +1,10 @@
+## API
+
+| Function         | Description
+|------------------|-------------
+| `mulle_printf`   | Like [printf](//www.cplusplus.com/reference/cstdio/printf/) prints to **stdout**
+| `mulle_vprintf`  | `<stdarg.h>` variant of `mulle_printf`
+| `mulle_fprintf`  | Prints to `FILE`
+| `mulle_vfprintf` | `<stdarg.h>` variant of `mulle_fprintf`
+
+
