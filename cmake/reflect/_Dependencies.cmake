@@ -18,7 +18,20 @@ endif()
 # Disable for a sdk: `mulle-sourcetree mark mulle-sprintf no-cmake-sdk-<name>`
 #
 if( NOT MULLE_SPRINTF_LIBRARY)
-   find_library( MULLE_SPRINTF_LIBRARY NAMES ${CMAKE_STATIC_LIBRARY_PREFIX}mulle-sprintf${CMAKE_DEBUG_POSTFIX}${CMAKE_STATIC_LIBRARY_SUFFIX} ${CMAKE_STATIC_LIBRARY_PREFIX}mulle-sprintf${CMAKE_STATIC_LIBRARY_SUFFIX} mulle-sprintf NO_CMAKE_SYSTEM_PATH NO_SYSTEM_ENVIRONMENT_PATH)
+   if( DEPENDENCY_IGNORE_SYSTEM_LIBARIES)
+      find_library( MULLE_SPRINTF_LIBRARY NAMES
+         ${CMAKE_STATIC_LIBRARY_PREFIX}mulle-sprintf${CMAKE_DEBUG_POSTFIX}${CMAKE_STATIC_LIBRARY_SUFFIX}
+         ${CMAKE_STATIC_LIBRARY_PREFIX}mulle-sprintf${CMAKE_STATIC_LIBRARY_SUFFIX}
+         mulle-sprintf
+         NO_CMAKE_SYSTEM_PATH NO_SYSTEM_ENVIRONMENT_PATH
+      )
+   else()
+      find_library( MULLE_SPRINTF_LIBRARY NAMES
+         ${CMAKE_STATIC_LIBRARY_PREFIX}mulle-sprintf${CMAKE_DEBUG_POSTFIX}${CMAKE_STATIC_LIBRARY_SUFFIX}
+         ${CMAKE_STATIC_LIBRARY_PREFIX}mulle-sprintf${CMAKE_STATIC_LIBRARY_SUFFIX}
+         mulle-sprintf
+      )
+   endif()
    message( STATUS "MULLE_SPRINTF_LIBRARY is ${MULLE_SPRINTF_LIBRARY}")
    #
    # The order looks ascending, but due to the way this file is read
@@ -29,11 +42,7 @@ if( NOT MULLE_SPRINTF_LIBRARY)
       # Add MULLE_SPRINTF_LIBRARY to ALL_LOAD_DEPENDENCY_LIBRARIES list.
       # Disable with: `mulle-sourcetree mark mulle-sprintf no-cmake-add`
       #
-      set( ALL_LOAD_DEPENDENCY_LIBRARIES
-         ${ALL_LOAD_DEPENDENCY_LIBRARIES}
-         ${MULLE_SPRINTF_LIBRARY}
-         CACHE INTERNAL "need to cache this"
-      )
+      list( APPEND ALL_LOAD_DEPENDENCY_LIBRARIES ${MULLE_SPRINTF_LIBRARY})
       #
       # Inherit information from dependency.
       # Encompasses: no-cmake-searchpath,no-cmake-dependency,no-cmake-loader
@@ -44,36 +53,25 @@ if( NOT MULLE_SPRINTF_LIBRARY)
       get_filename_component( _TMP_MULLE_SPRINTF_ROOT "${_TMP_MULLE_SPRINTF_ROOT}" DIRECTORY)
       #
       #
-      # Search for "DependenciesAndLibraries.cmake" to include.
+      # Search for "Definitions.cmake" and "DependenciesAndLibraries.cmake" to include.
       # Disable with: `mulle-sourcetree mark mulle-sprintf no-cmake-dependency`
       #
       foreach( _TMP_MULLE_SPRINTF_NAME "mulle-sprintf")
          set( _TMP_MULLE_SPRINTF_DIR "${_TMP_MULLE_SPRINTF_ROOT}/include/${_TMP_MULLE_SPRINTF_NAME}/cmake")
          # use explicit path to avoid "surprises"
-         if( EXISTS "${_TMP_MULLE_SPRINTF_DIR}/DependenciesAndLibraries.cmake")
-            unset( MULLE_SPRINTF_DEFINITIONS)
+         if( IS_DIRECTORY "${_TMP_MULLE_SPRINTF_DIR}")
             list( INSERT CMAKE_MODULE_PATH 0 "${_TMP_MULLE_SPRINTF_DIR}")
-            # we only want top level INHERIT_OBJC_LOADERS, so disable them
-            if( NOT NO_INHERIT_OBJC_LOADERS)
-               set( NO_INHERIT_OBJC_LOADERS OFF)
-            endif()
-            list( APPEND _TMP_INHERIT_OBJC_LOADERS ${NO_INHERIT_OBJC_LOADERS})
-            set( NO_INHERIT_OBJC_LOADERS ON)
             #
-            include( "${_TMP_MULLE_SPRINTF_DIR}/DependenciesAndLibraries.cmake")
-            #
-            list( GET _TMP_INHERIT_OBJC_LOADERS -1 NO_INHERIT_OBJC_LOADERS)
-            list( REMOVE_AT _TMP_INHERIT_OBJC_LOADERS -1)
+            include( "${_TMP_MULLE_SPRINTF_DIR}/DependenciesAndLibraries.cmake" OPTIONAL)
             #
             list( REMOVE_ITEM CMAKE_MODULE_PATH "${_TMP_MULLE_SPRINTF_DIR}")
-            set( INHERITED_DEFINITIONS
-               ${INHERITED_DEFINITIONS}
-               ${MULLE_SPRINTF_DEFINITIONS}
-               CACHE INTERNAL "need to cache this"
-            )
+            #
+            unset( MULLE_SPRINTF_DEFINITIONS)
+            include( "${_TMP_MULLE_SPRINTF_DIR}/Definitions.cmake" OPTIONAL)
+            list( APPEND INHERITED_DEFINITIONS ${MULLE_SPRINTF_DEFINITIONS})
             break()
          else()
-            message( STATUS "${_TMP_MULLE_SPRINTF_DIR}/DependenciesAndLibraries.cmake not found")
+            message( STATUS "${_TMP_MULLE_SPRINTF_DIR} not found")
          endif()
       endforeach()
    else()
