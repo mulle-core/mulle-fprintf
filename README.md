@@ -3,27 +3,29 @@
 #### 🔢 mulle-fprintf marries mulle-sprintf to stdio.h
 
 
-Function         | Description
------------------|-------------
-`mulle_printf`   | Like [printf](//www.cplusplus.com/reference/cstdio/printf/) prints to **stdout**
-`mulle_vprintf`  | `<stdarg.h>` variant of `mulle_printf`
-`mulle_fprintf`  | Prints to `FILE`
-`mulle_vfprintf` | `<stdarg.h>` variant of `mulle_fprintf`
+| Release Version                                       | Release Notes
+|-------------------------------------------------------|--------------
+| ![Mulle kybernetiK tag](https://img.shields.io/github/tag/mulle-core/mulle-fprintf.svg?branch=release) [![Build Status](https://github.com/mulle-core/mulle-fprintf/workflows/CI/badge.svg?branch=release)](//github.com/mulle-core/mulle-fprintf/actions)| [RELEASENOTES](RELEASENOTES.md) |
 
 
-| Release Version
-|-----------------------------------
-|[![Build Status](https://github.com/mulle-core/mulle-fprintf/workflows/CI/badge.svg?branch=release)](//github.com/mulle-core/mulle-fprintf)  ![Mulle kybernetiK tag](https://img.shields.io/github/tag/mulle-core/mulle-fprintf/workflows/CI/badge.svg?branch=release)
+## API
 
-### Memo
+| Function         | Description
+|------------------|-------------
+| `mulle_printf`   | Like [printf](//www.cplusplus.com/reference/cstdio/printf/) prints to **stdout**
+| `mulle_vprintf`  | `<stdarg.h>` variant of `mulle_printf`
+| `mulle_fprintf`  | Prints to `FILE`
+| `mulle_vfprintf` | `<stdarg.h>` variant of `mulle_fprintf`
 
-mulle-sprintf must be "force" linked (all-load) with mulle-fprintf, 
+
+
+## Usage
+
+mulle-sprintf must be "force" linked (all-load) with mulle-fprintf,
 otherwise the plugin conversions don't appear. mulle-sde will do this automatically.
 
 
-### You are here
 
-![Overview](overview.dot.svg)
 
 
 ## Add
@@ -31,15 +33,25 @@ otherwise the plugin conversions don't appear. mulle-sde will do this automatica
 Use [mulle-sde](//github.com/mulle-sde) to add mulle-fprintf to your project:
 
 ``` sh
-mulle-sde dependency add --c --github mulle-core mulle-fprintf
+mulle-sde add github:mulle-core/mulle-fprintf
 ```
+
+To only add the sources of mulle-fprintf with dependency
+sources use [clib](https://github.com/clibs/clib):
+
+
+``` sh
+clib install --out src/mulle-core mulle-core/mulle-fprintf
+```
+
+Add `-isystem src/mulle-core` to your `CFLAGS` and compile all the sources that were downloaded with your project.
+
 
 ## Install
 
-### mulle-sde
+### Install with mulle-sde
 
-Use [mulle-sde](//github.com/mulle-sde) to build and install mulle-fprintf
-and all its dependencies:
+Use [mulle-sde](//github.com/mulle-sde) to build and install mulle-fprintf and all dependencies:
 
 ``` sh
 mulle-sde install --prefix /usr/local \
@@ -48,14 +60,13 @@ mulle-sde install --prefix /usr/local \
 
 ### Manual Installation
 
-
 Install the requirements:
 
-Requirements                                           | Description
--------------------------------------------------------|-------------------
-[mulle-sprintf](//github.com/mulle-core/mulle-sprintf) | mulle-sprintf
+| Requirements                                 | Description
+|----------------------------------------------|-----------------------
+| [mulle-sprintf](https://github.com/mulle-core/mulle-sprintf)             | 🔢 An extensible sprintf function supporting stdarg and mulle-vararg
 
-Install into `/usr/local`:
+Install **mulle-fprintf** into `/usr/local` with [cmake](https://cmake.org):
 
 ``` sh
 cmake -B build \
@@ -66,21 +77,8 @@ cmake --build build --config Release &&
 cmake --install build --config Release
 ```
 
-### Steal
-
-Read [STEAL.md](//github.com/mulle-c11/dox/STEAL.md) on how to steal the
-source code and incorporate it in your own projects.
-
-
-### Platforms and Compilers
-
-All platforms and compilers supported by
-[mulle-c11](//github.com/mulle-c/mulle-c11) and
-[mulle-thread](//github.com/mulle-concurrent/mulle-thread).
-
-
 ## Author
 
-[Nat!](//www.mulle-kybernetik.com/weblog) for
-[Mulle kybernetiK](//www.mulle-kybernetik.com) and
-[Codeon GmbH](//www.codeon.de)
+[Nat!](https://mulle-kybernetik.com/weblog) for Mulle kybernetiK
+
+
