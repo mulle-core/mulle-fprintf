@@ -1,0 +1,23 @@
+{
+   project =
+   {
+      description="🔢 mulle-fprintf marries mulle-sprintf to stdio.h";
+      domain="github";
+      name="mulle-fprintf";
+      user="mulle-core";
+      repo="mulle-fprintf";
+      homepage="https://github.com/mulle-core/mulle-fprintf";
+      license="BSD-3-Clause"
+   };
+   dependencies =
+   (
+      {
+         description="🔢 An extensible sprintf function supporting stdarg and mulle-vararg";
+         domain="github";
+         name="mulle-sprintf";
+         repo="mulle-sprintf";
+         url="https://github.com/mulle-core/mulle-sprintf";
+         user="mulle-core";
+      }
+   )
+}
