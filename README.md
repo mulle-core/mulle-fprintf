@@ -30,6 +30,13 @@ otherwise the plugin conversions don't appear. mulle-sde will do this automatica
 
 ## Add
 
+**This project is a component of the [mulle-core](//github.com/mulle-core/mulle-core) library. As such you usually will *not* add or install it
+individually, unless you specifically do not want to link against
+`mulle-core`.**
+
+
+### Add as an individual component
+
 Use [mulle-sde](//github.com/mulle-sde) to add mulle-fprintf to your project:
 
 ``` sh
