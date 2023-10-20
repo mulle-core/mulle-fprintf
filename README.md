@@ -73,6 +73,8 @@ Install the requirements:
 |----------------------------------------------|-----------------------
 | [mulle-sprintf](https://github.com/mulle-core/mulle-sprintf)             | 🔢 An extensible sprintf function supporting stdarg and mulle-vararg
 
+Download the latest [tar](https://github.com/mulle-core/mulle-fprintf/archive/refs/tags/latest.tar.gz) or [zip](https://github.com/mulle-core/mulle-fprintf/archive/refs/tags/latest.zip) archive and unpack it.
+
 Install **mulle-fprintf** into `/usr/local` with [cmake](https://cmake.org):
 
 ``` sh
