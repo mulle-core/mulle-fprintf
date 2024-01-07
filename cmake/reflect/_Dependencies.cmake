@@ -17,64 +17,64 @@ endif()
 # Disable for this platform: `mulle-sourcetree mark mulle-sprintf no-cmake-platform-${MULLE_UNAME}`
 # Disable for a sdk: `mulle-sourcetree mark mulle-sprintf no-cmake-sdk-<name>`
 #
-if( NOT MULLE_SPRINTF_LIBRARY)
-   find_library( MULLE_SPRINTF_LIBRARY NAMES
+if( NOT MULLE__SPRINTF_LIBRARY)
+   find_library( MULLE__SPRINTF_LIBRARY NAMES
       ${CMAKE_STATIC_LIBRARY_PREFIX}mulle-sprintf${CMAKE_DEBUG_POSTFIX}${CMAKE_STATIC_LIBRARY_SUFFIX}
       ${CMAKE_STATIC_LIBRARY_PREFIX}mulle-sprintf${CMAKE_STATIC_LIBRARY_SUFFIX}
       mulle-sprintf
       NO_CMAKE_SYSTEM_PATH NO_SYSTEM_ENVIRONMENT_PATH
    )
-   if( NOT MULLE_SPRINTF_LIBRARY AND NOT DEPENDENCY_IGNORE_SYSTEM_LIBARIES)
-      find_library( MULLE_SPRINTF_LIBRARY NAMES
+   if( NOT MULLE__SPRINTF_LIBRARY AND NOT DEPENDENCY_IGNORE_SYSTEM_LIBARIES)
+      find_library( MULLE__SPRINTF_LIBRARY NAMES
          ${CMAKE_STATIC_LIBRARY_PREFIX}mulle-sprintf${CMAKE_DEBUG_POSTFIX}${CMAKE_STATIC_LIBRARY_SUFFIX}
          ${CMAKE_STATIC_LIBRARY_PREFIX}mulle-sprintf${CMAKE_STATIC_LIBRARY_SUFFIX}
          mulle-sprintf
       )
    endif()
-   message( STATUS "MULLE_SPRINTF_LIBRARY is ${MULLE_SPRINTF_LIBRARY}")
+   message( STATUS "MULLE__SPRINTF_LIBRARY is ${MULLE__SPRINTF_LIBRARY}")
    #
    # The order looks ascending, but due to the way this file is read
    # it ends up being descending, which is what we need.
    #
-   if( MULLE_SPRINTF_LIBRARY)
+   if( MULLE__SPRINTF_LIBRARY)
       #
-      # Add MULLE_SPRINTF_LIBRARY to ALL_LOAD_DEPENDENCY_LIBRARIES list.
+      # Add MULLE__SPRINTF_LIBRARY to ALL_LOAD_DEPENDENCY_LIBRARIES list.
       # Disable with: `mulle-sourcetree mark mulle-sprintf no-cmake-add`
       #
-      list( APPEND ALL_LOAD_DEPENDENCY_LIBRARIES ${MULLE_SPRINTF_LIBRARY})
+      list( APPEND ALL_LOAD_DEPENDENCY_LIBRARIES ${MULLE__SPRINTF_LIBRARY})
       #
       # Inherit information from dependency.
       # Encompasses: no-cmake-searchpath,no-cmake-dependency,no-cmake-loader
       # Disable with: `mulle-sourcetree mark mulle-sprintf no-cmake-inherit`
       #
       # temporarily expand CMAKE_MODULE_PATH
-      get_filename_component( _TMP_MULLE_SPRINTF_ROOT "${MULLE_SPRINTF_LIBRARY}" DIRECTORY)
-      get_filename_component( _TMP_MULLE_SPRINTF_ROOT "${_TMP_MULLE_SPRINTF_ROOT}" DIRECTORY)
+      get_filename_component( _TMP_MULLE__SPRINTF_ROOT "${MULLE__SPRINTF_LIBRARY}" DIRECTORY)
+      get_filename_component( _TMP_MULLE__SPRINTF_ROOT "${_TMP_MULLE__SPRINTF_ROOT}" DIRECTORY)
       #
       #
       # Search for "Definitions.cmake" and "DependenciesAndLibraries.cmake" to include.
       # Disable with: `mulle-sourcetree mark mulle-sprintf no-cmake-dependency`
       #
-      foreach( _TMP_MULLE_SPRINTF_NAME "mulle-sprintf")
-         set( _TMP_MULLE_SPRINTF_DIR "${_TMP_MULLE_SPRINTF_ROOT}/include/${_TMP_MULLE_SPRINTF_NAME}/cmake")
+      foreach( _TMP_MULLE__SPRINTF_NAME "mulle-sprintf")
+         set( _TMP_MULLE__SPRINTF_DIR "${_TMP_MULLE__SPRINTF_ROOT}/include/${_TMP_MULLE__SPRINTF_NAME}/cmake")
          # use explicit path to avoid "surprises"
-         if( IS_DIRECTORY "${_TMP_MULLE_SPRINTF_DIR}")
-            list( INSERT CMAKE_MODULE_PATH 0 "${_TMP_MULLE_SPRINTF_DIR}")
+         if( IS_DIRECTORY "${_TMP_MULLE__SPRINTF_DIR}")
+            list( INSERT CMAKE_MODULE_PATH 0 "${_TMP_MULLE__SPRINTF_DIR}")
             #
-            include( "${_TMP_MULLE_SPRINTF_DIR}/DependenciesAndLibraries.cmake" OPTIONAL)
+            include( "${_TMP_MULLE__SPRINTF_DIR}/DependenciesAndLibraries.cmake" OPTIONAL)
             #
-            list( REMOVE_ITEM CMAKE_MODULE_PATH "${_TMP_MULLE_SPRINTF_DIR}")
+            list( REMOVE_ITEM CMAKE_MODULE_PATH "${_TMP_MULLE__SPRINTF_DIR}")
             #
-            unset( MULLE_SPRINTF_DEFINITIONS)
-            include( "${_TMP_MULLE_SPRINTF_DIR}/Definitions.cmake" OPTIONAL)
-            list( APPEND INHERITED_DEFINITIONS ${MULLE_SPRINTF_DEFINITIONS})
+            unset( MULLE__SPRINTF_DEFINITIONS)
+            include( "${_TMP_MULLE__SPRINTF_DIR}/Definitions.cmake" OPTIONAL)
+            list( APPEND INHERITED_DEFINITIONS ${MULLE__SPRINTF_DEFINITIONS})
             break()
          else()
-            message( STATUS "${_TMP_MULLE_SPRINTF_DIR} not found")
+            message( STATUS "${_TMP_MULLE__SPRINTF_DIR} not found")
          endif()
       endforeach()
    else()
       # Disable with: `mulle-sourcetree mark mulle-sprintf no-require-link`
-      message( FATAL_ERROR "MULLE_SPRINTF_LIBRARY was not found")
+      message( FATAL_ERROR "MULLE__SPRINTF_LIBRARY was not found")
    endif()
 endif()
