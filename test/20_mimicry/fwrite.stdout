@@ -1,0 +1,10 @@
+Error in NULL pointers: fwrite: result=18446744073709551615, errno=0; mulle_buffer_fwrite: result=0, errno=0
+Write to memory stream: Passed (result=13, errno=0)
+Write to full buffer: Passed (result=13, errno=0)
+Write-only empty file: Passed (result=13, errno=0)
+Multiple writes: Passed (result=1, errno=0)
+Multiple writes: Passed (result=1, errno=0)
+Multiple writes: Passed (result=1, errno=0)
+Multiple writes: Passed (result=1, errno=0)
+Multiple writes: Passed (result=1, errno=0)
+Write with size=2, nmemb=6: Passed (result=6, errno=0)

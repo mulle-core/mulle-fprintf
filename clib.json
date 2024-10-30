@@ -1,6 +1,6 @@
 {
    "name" : "mulle-fprintf",
-   "version" : "0.1.3",
+   "version" : "0.2.0",
    "description" : "🔢 mulle-fprintf marries mulle-sprintf to stdio.h",
    "keywords" : [],
    "license" : "BSD-3-Clause",
@@ -8,6 +8,8 @@
    "src" : [
       "src/generic/include-private.h",
       "src/generic/include.h",
+      "src/mulle-buffer-stdio.c",
+      "src/mulle-buffer-stdio.h",
       "src/mulle-fprintf.c",
       "src/mulle-fprintf.h",
       "src/reflect/_mulle-fprintf-include-private.h",
