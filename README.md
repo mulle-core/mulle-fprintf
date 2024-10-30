@@ -2,6 +2,9 @@
 
 #### 🔢 mulle-fprintf marries mulle-sprintf to stdio.h
 
+See [mulle-sprintf](//github.com/mulle-core/mulle-sprintf) for details about
+the supported conversions.
+
 
 
 
@@ -21,10 +24,6 @@
 
 
 
-## Usage
-
-mulle-sprintf must be "force" linked (all-load) with mulle-fprintf,
-otherwise the plugin conversions don't appear. mulle-sde will do this automatically.
 
 
 
@@ -64,8 +63,6 @@ Add `-isystem src/mulle-core` to your `CFLAGS` and compile all the sources that 
 
 ## Install
 
-### Install with mulle-sde
-
 Use [mulle-sde](//github.com/mulle-sde) to build and install mulle-fprintf and all dependencies:
 
 ``` sh
@@ -73,7 +70,7 @@ mulle-sde install --prefix /usr/local \
    https://github.com/mulle-core/mulle-fprintf/archive/latest.tar.gz
 ```
 
-### Manual Installation
+### Legacy Installation
 
 Install the requirements:
 

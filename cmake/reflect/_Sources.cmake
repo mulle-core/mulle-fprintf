@@ -11,5 +11,6 @@ endif()
 # contents selected with patternfile ??-source--sources
 #
 set( SOURCES
+src/mulle-buffer-stdio.c
 src/mulle-fprintf.c
 )
