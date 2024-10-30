@@ -1,5 +1,0 @@
-## Usage
-
-mulle-sprintf must be "force" linked (all-load) with mulle-fprintf,
-otherwise the plugin conversions don't appear. mulle-sde will do this automatically.
-
