@@ -1,3 +1,8 @@
+## 0.2.0
+
+* use FILE * and mulle-buffer * interchangeably with the mulle-buffer-stdio code
+
+
 ### 0.1.3
 
 * Various small improvements
