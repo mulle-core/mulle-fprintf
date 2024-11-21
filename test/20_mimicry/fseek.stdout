@@ -11,7 +11,7 @@ Empty file - Read at 3: FILE*='ÿ' (-1) (errno=9), mulle_buffer='ÿ' (-1) (errno=9
 Empty file - Seek -2 from current: FILE*=-1 (errno=22), mulle_buffer=-1 (errno=22)
 Empty file - Write 'X': FILE*=88 (errno=0), mulle_buffer=88 (errno=0)
 Empty file - Seek to end: FILE*=-1 (errno=28), mulle_buffer=0 (errno=0)
-Empty file - Final position: FILE*=0 (errno=0), mulle_buffer=4 (errno=0)
+Empty file - Final position: FILE*=0 (errno=0), mulle_buffer=48 (errno=0)
 Read-only file - Initial position: FILE*=0 (errno=0), mulle_buffer=0 (errno=0)
 Read-only file - Seek to 3: FILE*=0 (errno=0), mulle_buffer=0 (errno=0)
 Read-only file - Read at 3: FILE*=' ' (32) (errno=0), mulle_buffer=' ' (32) (errno=0)
