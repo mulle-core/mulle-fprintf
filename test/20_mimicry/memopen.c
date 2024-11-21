@@ -79,6 +79,5 @@ int main(void)
         return 1;
     }
 
-    printf("All tests passed\n");
     return 0;
 }
