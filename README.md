@@ -10,7 +10,7 @@ the supported conversions.
 
 | Release Version                                       | Release Notes
 |-------------------------------------------------------|--------------
-| ![Mulle kybernetiK tag](https://img.shields.io/github/tag/mulle-core/mulle-fprintf.svg?branch=release) [![Build Status](https://github.com/mulle-core/mulle-fprintf/workflows/CI/badge.svg?branch=release)](//github.com/mulle-core/mulle-fprintf/actions) | [RELEASENOTES](RELEASENOTES.md) |
+| ![Mulle kybernetiK tag](https://img.shields.io/github/tag/mulle-core/mulle-fprintf.svg) [![Build Status](https://github.com/mulle-core/mulle-fprintf/workflows/CI/badge.svg)](//github.com/mulle-core/mulle-fprintf/actions) | [RELEASENOTES](RELEASENOTES.md) |
 
 
 ## API
