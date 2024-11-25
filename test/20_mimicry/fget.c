@@ -41,19 +41,28 @@ static int safe_mulle_buffer_fgetc(void *buffer)
     return result;
 }
 
-static void compare_fgetc(FILE *fp, void *buffer, const char *test_name)
+static void compare_fgetc( FILE *fp, void *buffer, const char *test_name)
 {
     int c1, c2;
     int errno1, errno2;
 
-    signal(SIGSEGV, signal_handler);
+    if( fp && ! buffer || ! fp && buffer)
+    {
+      printf("Error in %s: FILE * %s; mulle_buffer: %s\n",
+               test_name,
+               fp ? "valid" : "NULL",
+               buffer ? "valid" : "NULL");
+      return;
+    }
 
-    errno = 0;
-    c1 = safe_fgetc(fp);
+    signal( SIGSEGV, signal_handler);
+
+    errno  = 0;
+    c1     = safe_fgetc( fp);
     errno1 = errno;
 
-    errno = 0;
-    c2 = safe_mulle_buffer_fgetc(buffer);
+    errno  = 0;
+    c2     = safe_mulle_buffer_fgetc( buffer);
     errno2 = errno;
 
     if (c1 == c2 && errno1 == errno2)
@@ -69,11 +78,11 @@ static void compare_fgetc(FILE *fp, void *buffer, const char *test_name)
     }
     else
     {
-        printf("Error in %s: FILE*: char=%d, errno=%d; mulle_buffer: char=%d, errno=%d\n",
+        printf("Error in %s: FILE *: char=%d, errno=%d; mulle_buffer: char=%d, errno=%d\n",
                test_name, c1, errno1, c2, errno2);
     }
 
-    signal(SIGSEGV, SIG_DFL);  // Reset signal handler
+    signal( SIGSEGV, SIG_DFL);  // Reset signal handler
 }
 
 static void test_fgetc(void)
@@ -82,17 +91,14 @@ static void test_fgetc(void)
     void *buffer;
     const char *test_string = "Hello";
 
-    // Test case 1: NULL pointers
-    compare_fgetc(NULL, NULL, "NULL pointers");
-
-    // Test case 2: Zero-length memory
-    fp = fmemopen((void*)"", 0, "r");
-    buffer = mulle_buffer_fmemopen((void*)"", 0, "r");
-    compare_fgetc(fp, buffer, "Zero-length memory");
-    fclose(fp);
+    // Test case 1: Zero-length memory
+    fp     = fmemopen( (void *) "", 0, "r");
+    buffer = mulle_buffer_fmemopen( (void *) "", 0, "r");
+    compare_fgetc( fp, buffer, "Zero-length memory");
+    fclose( fp);
     mulle_buffer_fclose(buffer);
 
-    // Test case 3: Normal case
+    // Test case 2: Normal case
     fp = fmemopen((void*)test_string, strlen(test_string), "r");
     buffer = mulle_buffer_fmemopen((void*)test_string, strlen(test_string), "r");
     
@@ -108,12 +114,17 @@ static void test_fgetc(void)
     fclose(fp);
     mulle_buffer_fclose(buffer);
 
-    // Test case 4: Read-only empty file
+    // Test case 3: Read-only empty file
     fp = fmemopen(NULL, 0, "r");
     buffer = mulle_buffer_fmemopen(NULL, 0, "r");
     compare_fgetc(fp, buffer, "Read-only empty file");
     fclose(fp);
     mulle_buffer_fclose(buffer);
+
+    // Test case 4: NULL pointers
+    // MEMO: this will be different error code, as mulle_buffer_fgetc
+    //       will refuse to crash
+    compare_fgetc( NULL, NULL, "NULL pointers");
 }
 
 int main(int argc, const char * argv[])

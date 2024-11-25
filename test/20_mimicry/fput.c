@@ -46,6 +46,15 @@ static void compare_putc(int c, FILE *fp, void *buffer, const char *test_name)
     int r1, r2;
     int errno1, errno2;
 
+    if( fp && ! buffer || ! fp && buffer)
+    {
+      printf("Error in %s: FILE * %s; mulle_buffer: %s\n",
+               test_name,
+               fp ? "valid" : "NULL",
+               buffer ? "valid" : "NULL");
+      return;
+    }
+
     signal(SIGSEGV, signal_handler);
 
     errno = 0;
@@ -82,17 +91,14 @@ static void test_putc(void)
     void *buffer;
     char test_char = 'A';
 
-    // Test case 1: NULL pointers
-    compare_putc(test_char, NULL, NULL, "NULL pointers");
-
-    // Test case 2: Write to memory stream
+    // Test case 1: Write to memory stream
     fp = fmemopen(NULL, 100, "w");
     buffer = mulle_buffer_fmemopen(NULL, 100, "w");
     compare_putc(test_char, fp, buffer, "Write to memory stream");
     fclose(fp);
     mulle_buffer_fclose(buffer);
 
-    // Test case 3: Write to full buffer
+    // Test case 2: Write to full buffer
     char small_buf[1] = {0};
     fp = fmemopen(small_buf, 1, "w");
     buffer = mulle_buffer_fmemopen(small_buf, 1, "w");
@@ -101,14 +107,14 @@ static void test_putc(void)
     fclose(fp);
     mulle_buffer_fclose(buffer);
 
-    // Test case 4: Write-only empty file
+    // Test case 3: Write-only empty file
     fp = fmemopen(NULL, 0, "w");
     buffer = mulle_buffer_fmemopen(NULL, 0, "w");
     compare_putc(test_char, fp, buffer, "Write-only empty file");
     fclose(fp);
     mulle_buffer_fclose(buffer);
 
-    // Test case 5: Multiple writes
+    // Test case 4: Multiple writes
     fp = fmemopen(NULL, 100, "w");
     buffer = mulle_buffer_fmemopen(NULL, 100, "w");
     for (int i = 0; i < 5; i++)
@@ -117,7 +123,11 @@ static void test_putc(void)
     }
     fclose(fp);
     mulle_buffer_fclose(buffer);
+
+    // Test case 5: NULL pointers
+    compare_putc(test_char, NULL, NULL, "NULL pointers");
 }
+
 
 int main(int argc, const char * argv[])
 {
