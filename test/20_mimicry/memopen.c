@@ -13,71 +13,73 @@ int main(void)
     char buf[100];
     FILE  *fp;
 
-    // Test 1: Open with NULL buffer and "w" mode
-    buffer = mulle_buffer_fmemopen(NULL, 100, "w");
-    if (!buffer) {
-        printf("Test 1 failed: Could not open NULL buffer in write mode\n");
+    // Test 1: Open with NULL buffer and "r" mode
+    //         doesn't fail anymore
+    buffer = mulle_buffer_fmemopen(NULL, 100, "r");
+    if (! buffer) {
+        fprintf( stderr, "Test 1 failed: Opened NULL buffer in read mode\n");
+        mulle_buffer_fclose(buffer);
         return 1;
     }
     mulle_buffer_fclose(buffer);
 
-    // Test 2: Open with NULL buffer and "r" mode (should fail)
-    buffer = mulle_buffer_fmemopen(NULL, 100, "r");
-    if (buffer) {
-        printf("Test 2 failed: Opened NULL buffer in read mode\n");
-        mulle_buffer_fclose(buffer);
-        return 1;
-    }
-
-    // Test 3: Open with existing buffer and "r" mode
+    // Test 2: Open with existing buffer and "r" mode
     strcpy(buf, "Hello, World!");
     buffer = mulle_buffer_fmemopen(buf, strlen(buf), "r");
     if (!buffer) {
-        printf("Test 3 failed: Could not open existing buffer in read mode\n");
+        fprintf( stderr, "Test 2 failed: Could not open existing buffer in read mode\n");
         return 1;
     }
     mulle_buffer_fclose(buffer);
 
-    // Test 4: Open with existing buffer and "wü" mode (should clear buffer[ 0])
+    // Test 3: Open with existing buffer and "wü" mode (should clear buffer[ 0])
     buffer = mulle_buffer_fmemopen(buf, sizeof(buf), "w+");
     if (!buffer) {
-        printf("Test 4 failed: Could not open existing buffer in write mode\n");
+        fprintf( stderr, "Test 3 failed: Could not open existing buffer in write mode\n");
         return 1;
     }
     if (buf[0] != '\0') {
-        printf("Test 4 failed: Buffer not cleared in write mode\n");
+        fprintf( stderr, "Test 3 failed: Buffer not cleared in write mode\n");
         mulle_buffer_fclose(buffer);
         return 1;
     }
     mulle_buffer_fclose(buffer);
 
-    // Test 5: Open with existing buffer and "a" mode
+    // Test 4: Open with existing buffer and "a" mode
     strcpy(buf, "Hello");
     buffer = mulle_buffer_fmemopen(buf, sizeof(buf), "a");
     if (!buffer) {
-        printf("Test 5 failed: Could not open existing buffer in append mode\n");
+        fprintf( stderr, "Test 4 failed: Could not open existing buffer in append mode\n");
         return 1;
     }
     mulle_buffer_fclose(buffer);
 
-    // Test 6: Open with zero size
+    // Test 5: Open with zero size
     fp     = fmemopen( NULL, 0, "w");
     buffer = mulle_buffer_fmemopen(NULL, 0, "w");
     if (buffer && ! fp) {
-        printf("Test 6 failed: Opened buffer with zero size\n");
+        fprintf( stderr, "Test 5 failed: Opened buffer with zero size\n");
         mulle_buffer_fclose(buffer);
         return 1;
     }
     mulle_buffer_fclose(buffer);
     fclose( fp);
 
-    // Test 7: Open with invalid mode
+    // Test 6: Open with invalid mode
     buffer = mulle_buffer_fmemopen(buf, sizeof(buf), "x");
     if (buffer) {
-        printf("Test 7 failed: Opened buffer with invalid mode\n");
+        fprintf( stderr, "Test 6 failed: Opened buffer with invalid mode\n");
         mulle_buffer_fclose(buffer);
         return 1;
     }
+
+    // Test 7: Open with NULL buffer and "w" mode
+    buffer = mulle_buffer_fmemopen(NULL, 100, "w");
+    if (!buffer) {
+        fprintf( stderr, "Test 7 failed: Could not open NULL buffer in write mode\n");
+        return 1;
+    }
+    mulle_buffer_fclose(buffer);
 
     return 0;
 }

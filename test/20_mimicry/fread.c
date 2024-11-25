@@ -46,6 +46,15 @@ static void compare_read(void *ptr1, void *ptr2, size_t size, size_t nmemb, FILE
     size_t r1, r2;
     int errno1, errno2;
 
+    if( fp && ! buffer || ! fp && buffer)
+    {
+      printf("Error in %s: FILE * %s; mulle_buffer: %s\n",
+               test_name,
+               fp ? "valid" : "NULL",
+               buffer ? "valid" : "NULL");
+      return;
+    }
+
     signal(SIGSEGV, signal_handler);
 
     errno = 0;
@@ -87,31 +96,28 @@ static void test_read(void)
     const char test_data[] = "Hello, World!";
     char read_buf1[20], read_buf2[20];
 
-    // Test case 1: NULL pointers
-    compare_read(read_buf1, read_buf2, 1, strlen(test_data), NULL, NULL, "NULL pointers");
-
-    // Test case 2: Read from memory stream
+    // Test case 1: Read from memory stream
     fp = fmemopen((void*)test_data, strlen(test_data), "r");
     buffer = mulle_buffer_fmemopen((void*)test_data, strlen(test_data), "r");
     compare_read(read_buf1, read_buf2, 1, strlen(test_data), fp, buffer, "Read from memory stream");
     fclose(fp);
     mulle_buffer_fclose(buffer);
 
-    // Test case 3: Read more than available
+    // Test case 2: Read more than available
     fp = fmemopen((void*)test_data, strlen(test_data), "r");
     buffer = mulle_buffer_fmemopen((void*)test_data, strlen(test_data), "r");
     compare_read(read_buf1, read_buf2, 1, 20, fp, buffer, "Read more than available");
     fclose(fp);
     mulle_buffer_fclose(buffer);
 
-    // Test case 4: Read-only empty file
+    // Test case 3: Read-only empty file
     fp = fmemopen("", 0, "r");
     buffer = mulle_buffer_fmemopen("", 0, "r");
     compare_read(read_buf1, read_buf2, 1, 10, fp, buffer, "Read-only empty file");
     fclose(fp);
     mulle_buffer_fclose(buffer);
 
-    // Test case 5: Multiple reads
+    // Test case 4: Multiple reads
     fp = fmemopen((void*)test_data, strlen(test_data), "r");
     buffer = mulle_buffer_fmemopen((void*)test_data, strlen(test_data), "r");
     for (int i = 0; i < 5; i++)
@@ -121,12 +127,15 @@ static void test_read(void)
     fclose(fp);
     mulle_buffer_fclose(buffer);
 
-    // Test case 6: Read with different size and nmemb
+    // Test case 5: Read with different size and nmemb
     fp = fmemopen((void*)test_data, strlen(test_data), "r");
     buffer = mulle_buffer_fmemopen((void*)test_data, strlen(test_data), "r");
     compare_read(read_buf1, read_buf2, 2, strlen(test_data) / 2, fp, buffer, "Read with size=2, nmemb=6");
     fclose(fp);
     mulle_buffer_fclose(buffer);
+
+    // Test case 6: NULL pointers
+    compare_read(read_buf1, read_buf2, 1, strlen(test_data), NULL, NULL, "NULL pointers");
 }
 
 int main(int argc, const char * argv[])

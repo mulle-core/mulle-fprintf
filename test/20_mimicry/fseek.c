@@ -13,6 +13,15 @@ static void compare_seek_tell(FILE *fp, struct mulle_buffer *buffer, const char 
     int errno1, errno2;
     int c1, c2;
 
+    if( fp && ! buffer || ! fp && buffer)
+    {
+      printf("Error in %s: FILE * %s; mulle_buffer: %s\n",
+               test_name,
+               fp ? "valid" : "NULL",
+               buffer ? "valid" : "NULL");
+      return;
+    }
+
     // Test initial position
     errno = 0;
     pos1 = ftell( fp);
@@ -109,23 +118,23 @@ static void test_seek_tell(void)
       '1', '8', '4', '8'
     };
 
-    // Test case 2: Normal case with read/write
+    // Test case 1: Normal case with read/write
     fp = fmemopen((void*)test_string, strlen(test_string), "a+");
     buffer = mulle_buffer_fmemopen((void*)test_string, strlen(test_string), "a+");
     compare_seek_tell(fp, buffer, "Normal case");
     fclose(fp);
     mulle_buffer_fclose(buffer);
 
-    fp = fmemopen(NULL, 0, "w");
-    buffer = mulle_buffer_fmemopen(NULL, 0, "w");
-    compare_seek_tell(fp, buffer, "Empty file");
-    fclose(fp);
-    mulle_buffer_fclose(buffer);
-
-    // Test case 4: Read-only file, but mulle_buffer can't do read only
+    // Test case 2: Read-only file, but mulle_buffer can't do read only
     fp = fmemopen((void*)test_string, strlen(test_string), "r");
     buffer = mulle_buffer_fmemopen((void*)test_string, strlen(test_string), "r");
     compare_seek_tell(fp, buffer, "Read-only file");
+    fclose(fp);
+    mulle_buffer_fclose(buffer);
+
+    fp = fmemopen(NULL, 0, "w");
+    buffer = mulle_buffer_fmemopen(NULL, 0, "w");
+    compare_seek_tell(fp, buffer, "Empty file");
     fclose(fp);
     mulle_buffer_fclose(buffer);
 }
