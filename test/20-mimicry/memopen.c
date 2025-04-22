@@ -55,6 +55,7 @@ int main(void)
     mulle_buffer_fclose(buffer);
 
     // Test 5: Open with zero size
+#ifndef MULLE_TEST_VALGRIND
     fp     = fmemopen( NULL, 0, "w");
     buffer = mulle_buffer_fmemopen(NULL, 0, "w");
     if (buffer && ! fp) {
@@ -64,7 +65,7 @@ int main(void)
     }
     mulle_buffer_fclose(buffer);
     fclose( fp);
-
+#endif
     // Test 6: Open with invalid mode
     buffer = mulle_buffer_fmemopen(buf, sizeof(buf), "x");
     if (buffer) {

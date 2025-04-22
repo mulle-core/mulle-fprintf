@@ -479,6 +479,8 @@ int   mulle_buffer_init_with_filepath( struct mulle_buffer *buffer,
    // lets do this first, if the fopen later fails its not a problem
    // but buffer will be consistenly inited
    mulle_buffer_init( buffer, 0, allocator);
+   if( ! filepath)
+      return( (errno = EINVAL));
 
    fp = fopen( filepath, mode == MULLE_BUFFER_IS_BINARY ? "rb" : "r");
    if( ! fp)

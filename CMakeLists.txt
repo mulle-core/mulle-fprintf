@@ -1,6 +1,6 @@
 cmake_minimum_required( VERSION 3.14)
 
-project( mulle-fprintf VERSION 0.2.1 LANGUAGES C)
+project( mulle-fprintf VERSION 0.3.0 LANGUAGES C)
 
 
 #
