@@ -1,3 +1,11 @@
+## 0.3.0
+
+
+* check for NULL filepath in `mulle_buffer_init_with_filepath`
+
+* new API `mulle_buffer_do_filepath` to quickly fill up a buffer from a file
+
+
 ### 0.2.1
 
 Various small improvements
