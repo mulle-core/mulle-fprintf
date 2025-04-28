@@ -540,6 +540,19 @@ size_t   mulle_buffer_fread_FILE_all( struct mulle_buffer *buffer,
    file_size = ftell( fp);
    if( file_size == -1)
       return( 0);
+
+   // LONG_MAX actually observed value, when opening a directory
+   // Starting tests...
+   // current_pos=0
+   // file_size=9223372036854775807
+   // size=9223372036854775807 nmem=1
+   // memory allocation:: Cannot allocate memory
+   if( file_size == LONG_MAX)
+   {
+      errno = EISDIR;   // only observed then
+      return( 0);
+   }
+
    if( fseek( fp, current_pos, SEEK_SET) == -1)
       return( 0);
 
