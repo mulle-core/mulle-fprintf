@@ -44,3 +44,4 @@ coverage*.html
 cola/wilted/
 .mulle/etc/make/build-dir
 vgcore.*
+research/
