@@ -115,7 +115,7 @@ static void test_seek_tell(void)
     {
       'V', 'f', 'L', ' ',
       'B', 'o', 'c', 'h', 'u', 'm', ' ',
-      '1', '8', '4', '8'
+      '1', '8', '4', '8', 0
     };
 
     // Test case 1: Normal case with read/write

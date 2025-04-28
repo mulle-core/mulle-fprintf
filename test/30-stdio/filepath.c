@@ -84,9 +84,9 @@ static int   test_no_permission( void)
 
    chmod( "testdir/noperm.txt", 0000);
    rval = mulle_buffer_init_with_filepath( &buffer,
-                                          "testdir/noperm.txt",
-                                          MULLE_BUFFER_IS_TEXT,
-                                          NULL);
+                                           "testdir/noperm.txt",
+                                           MULLE_BUFFER_IS_TEXT,
+                                           NULL);
    fprintf( stderr, "Got rval=%d, errno=%d\n", rval, errno);
    mulle_buffer_done( &buffer);
 
@@ -129,9 +129,9 @@ static int   test_null( void)
 
    fprintf( stderr, "Testing NULL filepath...\n");
    rval = mulle_buffer_init_with_filepath( &buffer, 
-                                          NULL, 
-                                          MULLE_BUFFER_IS_TEXT,
-                                          NULL);
+                                           NULL,
+                                           MULLE_BUFFER_IS_TEXT,
+                                           NULL);
    fprintf( stderr, "Got rval=%d, errno=%d\n", rval, errno);
    mulle_buffer_done( &buffer);
 
@@ -150,14 +150,19 @@ int   main( void)
 
    if( test_nonexistent())
       return( 1);
+   fprintf( stderr, "test_nonexistent passed\n");
    if( test_empty())
       return( 1);
+   fprintf( stderr, "test_empty passed\n");
    if( test_no_permission())
       return( 1);
+   fprintf( stderr, "test_no_permission passed\n");
    if( test_directory())
       return( 1);
+   fprintf( stderr, "test_directory passed\n");
    if( test_null())
       return( 1);
+   fprintf( stderr, "test_null passed\n");
 
    example();
 
