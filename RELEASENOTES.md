@@ -1,3 +1,7 @@
+### 0.3.1
+
+* improve `mulle_buffer_fread_FILE_all` to not blindly trust seek and tell
+
 ## 0.3.0
 
 

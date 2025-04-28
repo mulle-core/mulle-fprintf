@@ -491,7 +491,7 @@ int   mulle_buffer_init_with_filepath( struct mulle_buffer *buffer,
    if( ! fp)
       return( errno);
 
-   rval  = mulle_buffer_fread_FILE_all( buffer, fp);
+   rval = mulle_buffer_fread_FILE_all( buffer, fp);
    fclose( fp);
 
    return( (rval == 0 && errno != EFBIG) ? errno : 0);
@@ -532,9 +532,16 @@ size_t   mulle_buffer_fread_FILE_all( struct mulle_buffer *buffer,
    long   file_size;
 
    current_pos = ftell( fp);
-   fseek( fp, 0, SEEK_END);
-   file_size = ftell(fp);
-   fseek( fp, current_pos, SEEK_SET);
+   if( current_pos == -1)
+      return( 0);
+
+   if( fseek( fp, 0, SEEK_END) == -1)
+      return( 0);
+   file_size = ftell( fp);
+   if( file_size == -1)
+      return( 0);
+   if( fseek( fp, current_pos, SEEK_SET) == -1)
+      return( 0);
 
    return( mulle_buffer_fread_FILE( buffer, 1, file_size, fp));
 }
