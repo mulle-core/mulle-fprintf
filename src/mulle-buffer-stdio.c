@@ -426,6 +426,15 @@ static off_t   mulle_FILE_lseek( void *buffer, off_t offset, int mode)
    return( (off_t) ftell( fp));
 }
 
+// what can I do ?
+#if defined( _WIN32)
+static void   *fmemopen( void *string, size_t size, const char *mode)
+{
+   fprintf( stderr, "Sorry but there is no fmemopen on windows. Use mulle_buffer_fmemopen instead\n");
+   abort();
+}
+#endif
+
 
 struct mulle_buffer_stdio_functions   mulle_stdio_functions =
 {
