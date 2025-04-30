@@ -426,12 +426,16 @@ static off_t   mulle_FILE_lseek( void *buffer, off_t offset, int mode)
    return( (off_t) ftell( fp));
 }
 
-// what can I do ?
+// what can I do ? Seem this is only used with Windows gcc matrix ?
 #if defined( _WIN32)
 static void   *fmemopen( void *string, size_t size, const char *mode)
 {
    fprintf( stderr, "Sorry but there is no fmemopen on windows. Use mulle_buffer_fmemopen instead\n");
    abort();
+
+   MULLE_C_UNUSED( string);
+   MULLE_C_UNUSED( size);
+   MULLE_C_UNUSED( mode);
 }
 #endif
 
