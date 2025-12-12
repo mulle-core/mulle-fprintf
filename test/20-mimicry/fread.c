@@ -5,6 +5,21 @@
 #include <signal.h>
 #include <setjmp.h>
 
+static const char* errno_name(int err)
+{
+    switch(err)
+    {
+    case 0: return "0";
+    case EBADF: return "EBADF";
+    case EINVAL: return "EINVAL";
+    case ENOSPC: return "ENOSPC";
+    case ENOMEM: return "ENOMEM";
+    case EACCES: return "EACCES";
+    case EPERM: return "EPERM";
+    default: return "UNKNOWN";
+    }
+}
+
 static jmp_buf jump_buffer;
 
 static void signal_handler(int signum)
@@ -73,17 +88,17 @@ static void compare_read(void *ptr1, void *ptr2, size_t size, size_t nmemb, FILE
         }
         else if (memcmp(ptr1, ptr2, r1 * size) == 0)
         {
-            printf("%s: Passed (result=%zu, errno=%d)\n", test_name, r1, errno1);
+            printf("%s: Passed (result=%zu, errno=%s)\n", test_name, r1, errno_name(errno1));
         }
         else
         {
-            printf("%s: Failed (result=%zu, errno=%d, but data mismatch)\n", test_name, r1, errno1);
+            printf("%s: Failed (result=%zu, errno=%s, but data mismatch)\n", test_name, r1, errno_name(errno1));
         }
     }
     else
     {
-        printf("Error in %s: fread: result=%zu, errno=%d; mulle_buffer_fread: result=%zu, errno=%d\n",
-               test_name, r1, errno1, r2, errno2);
+        printf("Error in %s: fread: result=%zu, errno=%s; mulle_buffer_fread: result=%zu, errno=%s\n",
+               test_name, r1, errno_name(errno1), r2, errno_name(errno2));
     }
 
     signal(SIGSEGV, SIG_DFL);  // Reset signal handler
