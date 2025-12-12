@@ -1,1 +1,1 @@
-mulle-fprintf;${MULLE__FPRINTF_NODETYPE:-tar};;6B6317C2-C741-4971-9C41-61602CED2362;${MULLE__FPRINTF_URL:-https://github.com/mulle-nat/mulle-fprintf/archive/${MULLE_TAG}.tar.gz};${MULLE__FPRINTF_BRANCH};${MULLE__FPRINTF_TAG:-latest};;
+mulle-fprintf;${MULLE__FPRINTF_NODETYPE:-tar};;43239593-7D5A-4F2B-B1FB-CABC60162613;${MULLE__FPRINTF_URL:-https://github.com/nat/mulle-fprintf/archive/${MULLE_TAG}.tar.gz};${MULLE__FPRINTF_BRANCH};${MULLE__FPRINTF_TAG:-latest};;
