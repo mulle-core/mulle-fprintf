@@ -5,6 +5,21 @@
 #include <signal.h>
 #include <setjmp.h>
 
+static const char* errno_name(int err)
+{
+    switch(err)
+    {
+    case 0: return "0";
+    case EBADF: return "EBADF";
+    case EINVAL: return "EINVAL";
+    case ENOSPC: return "ENOSPC";
+    case ENOMEM: return "ENOMEM";
+    case EACCES: return "EACCES";
+    case EPERM: return "EPERM";
+    default: return "UNKNOWN";
+    }
+}
+
 
 static jmp_buf jump_buffer;
 
@@ -73,13 +88,13 @@ static void compare_fgetc( FILE *fp, void *buffer, const char *test_name)
         }
         else
         {
-            printf("%s: Passed (char=%d, errno=%d)\n", test_name, c1, errno1);
+            printf("%s: Passed (char=%d, errno=%s)\n", test_name, c1, errno_name(errno1));
         }
     }
     else
     {
-        printf("Error in %s: FILE *: char=%d, errno=%d; mulle_buffer: char=%d, errno=%d\n",
-               test_name, c1, errno1, c2, errno2);
+        printf("Error in %s: FILE *: char=%d, errno=%s; mulle_buffer: char=%d, errno=%s\n",
+               test_name, c1, errno_name(errno1), c2, errno_name(errno2));
     }
 
     signal( SIGSEGV, SIG_DFL);  // Reset signal handler

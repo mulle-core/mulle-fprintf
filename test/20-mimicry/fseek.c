@@ -4,6 +4,32 @@
 #include <errno.h>
 #include <signal.h>
 
+static const char* errno_name(int err)
+{
+    switch(err)
+    {
+    case 0: return "0";
+    case EBADF: return "EBADF";
+    case EINVAL: return "EINVAL";
+    case ENOSPC: return "ENOSPC";
+    case ENOMEM: return "ENOMEM";
+    case EACCES: return "EACCES";
+    case EPERM: return "EPERM";
+    default: return "UNKNOWN";
+    }
+}
+
+static void print_char_safe(int c)
+{
+    if (c >= 32 && c <= 126) {
+        printf("'%c' (%d)", c, c);
+    } else if (c == -1) {
+        printf("EOF (-1)");
+    } else {
+        printf("(%d)", c);
+    }
+}
+
 
 
 static void compare_seek_tell(FILE *fp, struct mulle_buffer *buffer, const char *test_name)
@@ -31,8 +57,8 @@ static void compare_seek_tell(FILE *fp, struct mulle_buffer *buffer, const char 
     pos2 = mulle_buffer_ftell( buffer);
     errno2 = errno;
 
-    printf("%s - Initial position: FILE*=%ld (errno=%d), mulle_buffer=%ld (errno=%d)\n",
-           test_name, pos1, errno1, pos2, errno2);
+    printf("%s - Initial position: FILE*=%ld (%s), mulle_buffer=%ld (%s)\n",
+           test_name, pos1, errno_name(errno1), pos2, errno_name(errno2));
 
     // Seek to position 3
     errno = 0;
@@ -43,8 +69,8 @@ static void compare_seek_tell(FILE *fp, struct mulle_buffer *buffer, const char 
     res2 = mulle_buffer_fseek( buffer, 3, SEEK_SET);
     errno2 = errno;
 
-    printf("%s - Seek to 3: FILE*=%d (errno=%d), mulle_buffer=%d (errno=%d)\n",
-           test_name, res1, errno1, res2, errno2);
+    printf("%s - Seek to 3: FILE*=%d (%s), mulle_buffer=%d (%s)\n",
+           test_name, res1, errno_name(errno1), res2, errno_name(errno2));
 
     // Read character at position 3
     errno = 0;
@@ -55,8 +81,11 @@ static void compare_seek_tell(FILE *fp, struct mulle_buffer *buffer, const char 
     c2 = mulle_buffer_fgetc( buffer);
     errno2 = errno;
 
-    printf("%s - Read at 3: FILE*='%c' (%d) (errno=%d), mulle_buffer='%c' (%d) (errno=%d)\n",
-           test_name, c1, c1, errno1, c2, c2, errno2);
+    printf("%s - Read at 3: FILE*=", test_name);
+    print_char_safe(c1);
+    printf(" (%s), mulle_buffer=", errno_name(errno1));
+    print_char_safe(c2);
+    printf(" (%s)\n", errno_name(errno2));
 
     // Seek relative to current position
     errno = 0;
@@ -67,8 +96,8 @@ static void compare_seek_tell(FILE *fp, struct mulle_buffer *buffer, const char 
     res2 = mulle_buffer_fseek( buffer, -2, SEEK_CUR);
     errno2 = errno;
 
-    printf("%s - Seek -2 from current: FILE*=%d (errno=%d), mulle_buffer=%d (errno=%d)\n",
-           test_name, res1, errno1, res2, errno2);
+    printf("%s - Seek -2 from current: FILE*=%d (%s), mulle_buffer=%d (%s)\n",
+           test_name, res1, errno_name(errno1), res2, errno_name(errno2));
 
     // Write character at new position
     errno = 0;
@@ -79,8 +108,8 @@ static void compare_seek_tell(FILE *fp, struct mulle_buffer *buffer, const char 
     res2 = mulle_buffer_fputc( 'X', buffer);
     errno2 = errno;
 
-    printf("%s - Write 'X': FILE*=%d (errno=%d), mulle_buffer=%d (errno=%d)\n",
-           test_name, res1, errno1, res2, errno2);
+    printf("%s - Write 'X': FILE*=%d (%s), mulle_buffer=%d (%s)\n",
+           test_name, res1, errno_name(errno1), res2, errno_name(errno2));
 
     // Seek to end
     errno = 0;
@@ -91,8 +120,8 @@ static void compare_seek_tell(FILE *fp, struct mulle_buffer *buffer, const char 
     res2 = mulle_buffer_fseek( buffer, 0, SEEK_END);
     errno2 = errno;
 
-    printf("%s - Seek to end: FILE*=%d (errno=%d), mulle_buffer=%d (errno=%d)\n",
-           test_name, res1, errno1, res2, errno2);
+    printf("%s - Seek to end: FILE*=%d (%s), mulle_buffer=%d (%s)\n",
+           test_name, res1, errno_name(errno1), res2, errno_name(errno2));
 
     // Get final position
     errno = 0;
@@ -103,8 +132,8 @@ static void compare_seek_tell(FILE *fp, struct mulle_buffer *buffer, const char 
     pos2 = mulle_buffer_ftell( buffer);
     errno2 = errno;
 
-    printf("%s - Final position: FILE*=%ld (errno=%d), mulle_buffer=%ld (errno=%d)\n",
-           test_name, pos1, errno1, pos2, errno2);
+    printf("%s - Final position: FILE*=%ld (%s), mulle_buffer=%ld (%s)\n",
+           test_name, pos1, errno_name(errno1), pos2, errno_name(errno2));
 }
 
 static void test_seek_tell(void)

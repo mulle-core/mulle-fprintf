@@ -3,6 +3,21 @@
 #include <string.h>
 #include <stdlib.h>
 
+static const char* errno_name(int err)
+{
+    switch(err)
+    {
+    case 0: return "Success";
+    case EBADF: return "EBADF";
+    case EINVAL: return "EINVAL";
+    case ENOSPC: return "ENOSPC";
+    case ENOMEM: return "ENOMEM";
+    case EACCES: return "EACCES";
+    case EPERM: return "EPERM";
+    default: return "UNKNOWN";
+    }
+}
+
 
 static void   test_file( FILE *fp)
 {
@@ -14,21 +29,21 @@ static void   test_file( FILE *fp)
 
    errno = 0;
    res1  = fseek( fp, -2, SEEK_CUR);
-   printf( "res1 %d: %s\n", res1, strerror( errno));
+   printf( "res1 %d: %s\n", res1, errno_name( errno));
 
    off   = ftell( fp);
    printf( "off %ld\n", off);
 
    errno = 0;
    res1  = fputc( 'X', fp);
-   printf( "res1 %d: %s\n", res1, strerror( errno));
+   printf( "res1 %d: %s\n", res1, errno_name( errno));
 
    off   = ftell( fp);
    printf( "off %ld\n", off);
 
    errno = 0;
    res1  = fseek( fp, 0, SEEK_END);
-   printf( "res1 %d: %s\n", res1, strerror( errno));
+   printf( "res1 %d: %s\n", res1, errno_name( errno));
 
    off   = ftell( fp);
    printf( "off %ld\n", off);
