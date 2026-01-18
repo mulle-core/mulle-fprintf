@@ -1,5 +1,5 @@
 Error in Write to memory stream: FILE * NULL; mulle_buffer: valid
-Error in Write to buffer: fwrite: result=5, errno=0; mulle_buffer_fwrite: result=0, errno=28
+Error in Write to buffer: fwrite: result=5, errno=0; mulle_buffer_fwrite: result=0, errno=ENOSPC
 Error in Write-only empty file: FILE * NULL; mulle_buffer: valid
 Error in Multiple writes: FILE * NULL; mulle_buffer: valid
 Error in Multiple writes: FILE * NULL; mulle_buffer: valid
