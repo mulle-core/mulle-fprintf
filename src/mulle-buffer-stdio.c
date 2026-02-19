@@ -3,6 +3,10 @@
 #include <errno.h>
 #include <stdio.h>
 
+#ifdef _WIN32
+# include <windows.h>
+#endif
+
 
 //
 //  r   : USEFUL:  readonly.
@@ -502,7 +506,19 @@ int   mulle_buffer_init_with_filepath( struct mulle_buffer *buffer,
 
    fp = fopen( filepath, mode == MULLE_BUFFER_IS_BINARY ? "rb" : "r");
    if( ! fp)
+   {
+#ifdef _WIN32
+      // On Windows, fopen returns EACCES for directories
+      // Check if it's actually a directory and return EISDIR
+      if( errno == EACCES)
+      {
+         DWORD attrs = GetFileAttributesA( filepath);
+         if( attrs != INVALID_FILE_ATTRIBUTES && (attrs & FILE_ATTRIBUTE_DIRECTORY))
+            errno = EISDIR;
+      }
+#endif
       return( errno);
+   }
 
    rval = mulle_buffer_fread_FILE_all( buffer, fp);
    fclose( fp);

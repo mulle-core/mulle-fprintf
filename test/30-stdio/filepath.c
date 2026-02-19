@@ -4,6 +4,21 @@
 #include <unistd.h>
 
 
+static const char *errno_name(int err)
+{
+   switch(err)
+   {
+   case 0       : return( "0");
+   case ENOENT  : return( "ENOENT");
+   case EACCES  : return( "EACCES");
+   case EISDIR  : return( "EISDIR");
+   case EINVAL  : return( "EINVAL");
+   case ENOTDIR : return( "ENOTDIR");
+   default      : return( "UNKNOWN");
+   }
+}
+
+
 static void   example( void)
 {
    struct mulle_buffer   buffer;
@@ -38,7 +53,7 @@ static int   test_nonexistent( void)
                                           "testdir/nosuchfile.txt",
                                           MULLE_BUFFER_IS_TEXT,
                                           NULL);
-   fprintf( stderr, "Got rval=%d, errno=%d\n", rval, errno);
+   fprintf( stderr, "Got status=%d, errno=%s\n", (rval != 0), errno_name(errno));
    mulle_buffer_done( &buffer);
 
    if( ! rval)  // should fail
@@ -60,7 +75,7 @@ static int   test_empty( void)
                                           "testdir/empty.txt",
                                           MULLE_BUFFER_IS_TEXT,
                                           NULL);
-   fprintf( stderr, "Got rval=%d, errno=%d\n", rval, errno);
+   fprintf( stderr, "Got status=%d, errno=%s\n", (rval != 0), errno_name(errno));
 
    if( rval)  // should succeed
       return( 0);  // Changed: empty file is allowed to fail
@@ -87,16 +102,18 @@ static int   test_no_permission( void)
                                            "testdir/noperm.txt",
                                            MULLE_BUFFER_IS_TEXT,
                                            NULL);
-   fprintf( stderr, "Got rval=%d, errno=%d\n", rval, errno);
+   fprintf( stderr, "Got status=%d, errno=%s\n", (rval != 0), errno_name(errno));
    mulle_buffer_done( &buffer);
 
    chmod( "testdir/noperm.txt", 0666);
 
+#ifndef _WIN32
    if( ! rval)  // should fail
    {
       fprintf( stderr, "Failed: Expected error for no permission file\n");
       return( 1);
    }
+#endif
    return( 0);
 }
 
@@ -110,7 +127,7 @@ static int   test_directory( void)
                                           "testdir", 
                                           MULLE_BUFFER_IS_TEXT,
                                           NULL);
-   fprintf( stderr, "Got rval=%d, errno=%d\n", rval, errno);
+   fprintf( stderr, "Got status=%d, errno=%s\n", (rval != 0), errno_name(errno));
    mulle_buffer_done( &buffer);
 
    if( ! rval)  // should fail
@@ -132,7 +149,7 @@ static int   test_null( void)
                                            NULL,
                                            MULLE_BUFFER_IS_TEXT,
                                            NULL);
-   fprintf( stderr, "Got rval=%d, errno=%d\n", rval, errno);
+   fprintf( stderr, "Got status=%d, errno=%s\n", (rval != 0), errno_name(errno));
    mulle_buffer_done( &buffer);
 
    if( ! rval)  // should fail

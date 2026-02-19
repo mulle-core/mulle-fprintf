@@ -4,6 +4,7 @@
 #include <errno.h>
 #include <signal.h>
 #include <setjmp.h>
+#include "fmemopen-compat.h"
 
 static const char* errno_name(int err)
 {
@@ -115,22 +116,28 @@ static void test_read(void)
     fp = fmemopen((void*)test_data, strlen(test_data), "r");
     buffer = mulle_buffer_fmemopen((void*)test_data, strlen(test_data), "r");
     compare_read(read_buf1, read_buf2, 1, strlen(test_data), fp, buffer, "Read from memory stream");
-    fclose(fp);
-    mulle_buffer_fclose(buffer);
+    if( fp)
+       fclose(fp);
+    if( buffer)
+       mulle_buffer_fclose(buffer);
 
     // Test case 2: Read more than available
     fp = fmemopen((void*)test_data, strlen(test_data), "r");
     buffer = mulle_buffer_fmemopen((void*)test_data, strlen(test_data), "r");
     compare_read(read_buf1, read_buf2, 1, 20, fp, buffer, "Read more than available");
-    fclose(fp);
-    mulle_buffer_fclose(buffer);
+    if( fp)
+       fclose(fp);
+    if( buffer)
+       mulle_buffer_fclose(buffer);
 
     // Test case 3: Read-only empty file
     fp = fmemopen("", 0, "r");
     buffer = mulle_buffer_fmemopen("", 0, "r");
     compare_read(read_buf1, read_buf2, 1, 10, fp, buffer, "Read-only empty file");
-    fclose(fp);
-    mulle_buffer_fclose(buffer);
+    if( fp)
+       fclose(fp);
+    if( buffer)
+       mulle_buffer_fclose(buffer);
 
     // Test case 4: Multiple reads
     fp = fmemopen((void*)test_data, strlen(test_data), "r");
@@ -139,15 +146,19 @@ static void test_read(void)
     {
         compare_read(read_buf1, read_buf2, 1, 2, fp, buffer, "Multiple reads");
     }
-    fclose(fp);
-    mulle_buffer_fclose(buffer);
+    if( fp)
+       fclose(fp);
+    if( buffer)
+       mulle_buffer_fclose(buffer);
 
     // Test case 5: Read with different size and nmemb
     fp = fmemopen((void*)test_data, strlen(test_data), "r");
     buffer = mulle_buffer_fmemopen((void*)test_data, strlen(test_data), "r");
     compare_read(read_buf1, read_buf2, 2, strlen(test_data) / 2, fp, buffer, "Read with size=2, nmemb=6");
-    fclose(fp);
-    mulle_buffer_fclose(buffer);
+    if( fp)
+       fclose(fp);
+    if( buffer)
+       mulle_buffer_fclose(buffer);
 
     // Test case 6: NULL pointers
 #ifndef MULLE_TEST_VALGRIND
@@ -160,6 +171,11 @@ static void test_read(void)
 
 int main(int argc, const char * argv[])
 {
+#if !HAVE_FMEMOPEN
+    printf("fread tests skipped on Windows (fmemopen not available)\n");
+    return 0;
+#else
     test_read();
     return 0;
+#endif
 }

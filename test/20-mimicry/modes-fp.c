@@ -2,6 +2,7 @@
 #include <errno.h>
 #include <string.h>
 #include <stdlib.h>
+#include "fmemopen-compat.h"
 
 static const char* errno_name(int err)
 {
@@ -63,12 +64,17 @@ static void   test( char *mode)
    test_file( fp);
 
    printf( "s: \"%s\"\n", test_string);
-   fclose( fp);
+   if( fp)
+      fclose(fp);
 }
 
 
 int   main( void)
 {
+#if !HAVE_FMEMOPEN
+   printf("modes-fp tests skipped on Windows (fmemopen not available)\n");
+   return 0;
+#else
    test( "r");
    test( "w");
    test( "a");
@@ -77,4 +83,5 @@ int   main( void)
    test( "a+");
 
    return( 0);
+#endif
 }
