@@ -1,0 +1,14 @@
+Starting tests...
+Testing nonexistent file...
+Got status=1, errno=ENOENT
+test_nonexistent passed
+Got status=0, errno=UNKNOWN
+test_empty passed
+Got status=1, errno=EACCES
+test_no_permission passed
+Got status=1, errno=EISDIR
+test_directory passed
+Testing NULL filepath...
+Got status=1, errno=EINVAL
+test_null passed
+All tests passed!

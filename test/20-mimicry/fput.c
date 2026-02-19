@@ -4,6 +4,7 @@
 #include <errno.h>
 #include <signal.h>
 #include <setjmp.h>
+#include "fmemopen-compat.h"
 
 static const char* errno_name(int err)
 {
@@ -110,8 +111,10 @@ static void test_putc(void)
     fp = fmemopen(NULL, 100, "w");
     buffer = mulle_buffer_fmemopen(NULL, 100, "w");
     compare_putc(test_char, fp, buffer, "Write to memory stream");
-    fclose(fp);
-    mulle_buffer_fclose(buffer);
+    if( fp)
+       fclose(fp);
+    if( buffer)
+       mulle_buffer_fclose(buffer);
 
     // Test case 2: Write to full buffer
     char small_buf[1] = {0};
@@ -119,16 +122,20 @@ static void test_putc(void)
     buffer = mulle_buffer_fmemopen(small_buf, 1, "w");
     compare_putc(test_char, fp, buffer, "Write to full buffer (first write)");
     compare_putc(test_char, fp, buffer, "Write to full buffer (second write)");
-    fclose(fp);
-    mulle_buffer_fclose(buffer);
+    if( fp)
+       fclose(fp);
+    if( buffer)
+       mulle_buffer_fclose(buffer);
 
     // Test case 3: Write-only empty file
 #ifndef MULLE_TEST_VALGRIND
     fp = fmemopen(NULL, 0, "w");
     buffer = mulle_buffer_fmemopen(NULL, 0, "w");
     compare_putc(test_char, fp, buffer, "Write-only empty file");
-    fclose(fp);
-    mulle_buffer_fclose(buffer);
+    if( fp)
+       fclose(fp);
+    if( buffer)
+       mulle_buffer_fclose(buffer);
 #else
    // fake it, coz we ain't debugging glibc
    printf( "Write-only empty file: Passed (result=65, errno=0)\n");
@@ -141,8 +148,10 @@ static void test_putc(void)
     {
         compare_putc('0' + i, fp, buffer, "Multiple writes");
     }
-    fclose(fp);
-    mulle_buffer_fclose(buffer);
+    if( fp)
+       fclose(fp);
+    if( buffer)
+       mulle_buffer_fclose(buffer);
 
     // Test case 5: NULL pointers
 #ifndef MULLE_TEST_VALGRIND
@@ -156,6 +165,11 @@ static void test_putc(void)
 
 int main(int argc, const char * argv[])
 {
+#if !HAVE_FMEMOPEN
+    printf("fput tests skipped on Windows (fmemopen not available)\n");
+    return 0;
+#else
     test_putc();
     return 0;
+#endif
 }

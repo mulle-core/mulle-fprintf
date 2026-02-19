@@ -3,6 +3,7 @@
 #include <string.h>
 #include <errno.h>
 #include <signal.h>
+#include "fmemopen-compat.h"
 
 static const char* errno_name(int err)
 {
@@ -151,22 +152,28 @@ static void test_seek_tell(void)
     fp = fmemopen((void*)test_string, strlen(test_string), "a+");
     buffer = mulle_buffer_fmemopen((void*)test_string, strlen(test_string), "a+");
     compare_seek_tell(fp, buffer, "Normal case");
-    fclose(fp);
-    mulle_buffer_fclose(buffer);
+    if( fp)
+       fclose(fp);
+    if( buffer)
+       mulle_buffer_fclose(buffer);
 
     // Test case 2: Read-only file, but mulle_buffer can't do read only
     fp = fmemopen((void*)test_string, strlen(test_string), "r");
     buffer = mulle_buffer_fmemopen((void*)test_string, strlen(test_string), "r");
     compare_seek_tell(fp, buffer, "Read-only file");
-    fclose(fp);
-    mulle_buffer_fclose(buffer);
+    if( fp)
+       fclose(fp);
+    if( buffer)
+       mulle_buffer_fclose(buffer);
 
 #ifndef MULLE_TEST_VALGRIND
     fp = fmemopen(NULL, 0, "w");
     buffer = mulle_buffer_fmemopen(NULL, 0, "w");
     compare_seek_tell(fp, buffer, "Empty file");
-    fclose(fp);
-    mulle_buffer_fclose(buffer);
+    if( fp)
+       fclose(fp);
+    if( buffer)
+       mulle_buffer_fclose(buffer);
 #else
     printf( "Empty file - Initial position: FILE*=0 (errno=0), mulle_buffer=0 (errno=0)\n"
             "Empty file - Seek to 3: FILE*=-1 (errno=22), mulle_buffer=-1 (errno=22)\n"
@@ -181,6 +188,11 @@ static void test_seek_tell(void)
 
 int main(int argc, const char * argv[])
 {
+#if !HAVE_FMEMOPEN
+    printf("fseek tests skipped on Windows (fmemopen not available)\n");
+    return 0;
+#else
     test_seek_tell();
     return 0;
+#endif
 }

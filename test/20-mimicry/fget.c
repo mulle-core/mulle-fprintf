@@ -4,6 +4,7 @@
 #include <errno.h>
 #include <signal.h>
 #include <setjmp.h>
+#include "fmemopen-compat.h"
 
 static const char* errno_name(int err)
 {
@@ -102,6 +103,10 @@ static void compare_fgetc( FILE *fp, void *buffer, const char *test_name)
 
 static void test_fgetc(void)
 {
+#if !HAVE_FMEMOPEN
+    printf("fget tests skipped on Windows (fmemopen not available)\n");
+    return;
+#else
     FILE *fp;
     void *buffer;
     const char *test_string = "Hello";
@@ -110,8 +115,10 @@ static void test_fgetc(void)
     fp     = fmemopen( (void *) "", 0, "r");
     buffer = mulle_buffer_fmemopen( (void *) "", 0, "r");
     compare_fgetc( fp, buffer, "Zero-length memory");
-    fclose( fp);
-    mulle_buffer_fclose(buffer);
+    if( fp)
+       fclose( fp);
+    if( buffer)
+       mulle_buffer_fclose(buffer);
 
     // Test case 2: Normal case
     fp = fmemopen((void*)test_string, strlen(test_string), "r");
@@ -126,16 +133,20 @@ static void test_fgetc(void)
     // Test EOF
     compare_fgetc(fp, buffer, "EOF case");
 
-    fclose(fp);
-    mulle_buffer_fclose(buffer);
+    if( fp)
+       fclose(fp);
+    if( buffer)
+       mulle_buffer_fclose(buffer);
 
     // Test case 3: Read-only empty file
 #ifndef MULLE_TEST_VALGRIND
     fp = fmemopen(NULL, 0, "r");
     buffer = mulle_buffer_fmemopen(NULL, 0, "r");
     compare_fgetc(fp, buffer, "Read-only empty file");
-    fclose(fp);
-    mulle_buffer_fclose(buffer);
+    if( fp)
+       fclose(fp);
+    if( buffer)
+       mulle_buffer_fclose(buffer);
 
     // Test case 4: NULL pointers
     // MEMO: this will be different error code, as mulle_buffer_fgetc
@@ -145,6 +156,7 @@ static void test_fgetc(void)
    // fake it, coz we ain't debugging glibc
    printf( "Read-only empty file: Passed (char=-1, errno=0)\n");
    printf( "Error in NULL pointers: FILE *: char=-2, errno=0; mulle_buffer: char=-1, errno=0\n");
+#endif
 #endif
 }
 

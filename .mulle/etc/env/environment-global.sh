@@ -1,18 +1,6 @@
 #
 #
 #
-export MULLE_SOURCETREE_RESOLVE_TAG="NO"
-
-
-#
-#
-#
-export MULLE_SOURCETREE_GRAVEYARD_ENABLED="NO"
-
-
-#
-#
-#
 export MULLE_CRAFT_PLATFORMS="${MULLE_UNAME}:windows"
 
 

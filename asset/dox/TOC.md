@@ -1,4 +1,5 @@
 # mulle-fprintf Library Documentation for AI
+<!-- Keywords: printf, stdio -->
 
 ## 1. Introduction & Purpose
 
