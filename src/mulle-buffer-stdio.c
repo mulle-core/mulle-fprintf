@@ -4,6 +4,9 @@
 #include <stdio.h>
 
 #ifdef _WIN32
+# ifndef MULLE_BOOL_DEFINED
+#  error "you need to include <mulle-c11/mulle-c11-bool.h> before including <windows.h>"
+# endif
 # include <windows.h>
 #endif
 
