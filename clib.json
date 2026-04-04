@@ -1,6 +1,6 @@
 {
    "name" : "mulle-fprintf",
-   "version" : "20",
+   "version" : "0.3.3",
    "description" : "🔢 mulle-fprintf marries mulle-sprintf to stdio.h",
    "keywords" : [],
    "license" : "BSD-3-Clause",
