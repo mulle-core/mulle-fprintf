@@ -4,6 +4,7 @@
       description="🔢 mulle-fprintf marries mulle-sprintf to stdio.h";
       domain="github";
       name="mulle-fprintf";
+      version="0.3.3";
       user="mulle-core";
       repo="mulle-fprintf";
       homepage="https://github.com/mulle-core/mulle-fprintf";
