@@ -1,1 +1,1 @@
-mulle-fprintf;${MULLE__FPRINTF_NODETYPE:-tar};;43239593-7D5A-4F2B-B1FB-CABC60162613;${MULLE__FPRINTF_URL:-https://github.com/nat/mulle-fprintf/archive/${MULLE_TAG}.tar.gz};${MULLE__FPRINTF_BRANCH};${MULLE__FPRINTF_TAG:-latest};;
+mulle-fprintf;${MULLE__FPRINTF_NODETYPE:-tar};;C8D768BB-6C47-4096-8ABC-B0B375F0AA5B;${MULLE__FPRINTF_URL:-https://github.com/mulle-kybernetik-tv/mulle-fprintf/archive/${MULLE_TAG}.tar.gz};${MULLE__FPRINTF_BRANCH};${MULLE__FPRINTF_TAG:-latest};;
