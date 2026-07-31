@@ -1,7 +1,6 @@
 ### 0.3.4
 
-Various small improvements
 
-### 0.3.3
 
-Various small improvements
+* **BREAKING** removed unused `FILE *fp` parameter from ``mulle_putchar`` signature
+* function now correctly matches the underlying `putchar()` semantics
