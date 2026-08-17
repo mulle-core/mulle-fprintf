@@ -175,14 +175,13 @@ static void test_seek_tell(void)
     if( buffer)
        mulle_buffer_fclose(buffer);
 #else
-    printf( "Empty file - Initial position: FILE*=0 (errno=0), mulle_buffer=0 (errno=0)\n"
-            "Empty file - Seek to 3: FILE*=-1 (errno=22), mulle_buffer=-1 (errno=22)\n"
-            "Empty file - Read at 3: FILE*='%c' (-1) (errno=9), mulle_buffer='%c' (-1) (errno=9)\n"
-            "Empty file - Seek -2 from current: FILE*=-1 (errno=22), mulle_buffer=-1 (errno=22)\n"
-            "Empty file - Write 'X': FILE*=88 (errno=0), mulle_buffer=88 (errno=0)\n"
-            "Empty file - Seek to end: FILE*=-1 (errno=28), mulle_buffer=-1 (errno=28)\n"
-            "Empty file - Final position: FILE*=0 (errno=0), mulle_buffer=0 (errno=0)\n",
-            -1, -1);
+    printf( "Empty file - Initial position: FILE*=0 (0), mulle_buffer=0 (0)\n"
+            "Empty file - Seek to 3: FILE*=-1 (EINVAL), mulle_buffer=-1 (EINVAL)\n"
+            "Empty file - Read at 3: FILE*=EOF (-1) (EBADF), mulle_buffer=EOF (-1) (EBADF)\n"
+            "Empty file - Seek -2 from current: FILE*=-1 (EINVAL), mulle_buffer=-1 (EINVAL)\n"
+            "Empty file - Write 'X': FILE*=88 (0), mulle_buffer=88 (0)\n"
+            "Empty file - Seek to end: FILE*=-1 (ENOSPC), mulle_buffer=-1 (ENOSPC)\n"
+            "Empty file - Final position: FILE*=0 (0), mulle_buffer=0 (0)\n");
 #endif
 }
 

@@ -1,0 +1,83 @@
+## Usage
+
+### Printf-style output
+
+``` c
+#include <mulle-core/mulle-core.h>
+
+int   main( void)
+{
+   mulle_printf( "%d: %s\n", 1848, "VfL Bochum");
+   mulle_fprintf( stderr, "error: %s\n", "something went wrong");
+   return( 0);
+}
+```
+
+### Polymorphic I/O with vtables
+
+Write I/O code once, use it with either `FILE *` or `mulle_buffer *`:
+
+``` c
+#include <mulle-core/mulle-core.h>
+
+static void   write_greeting( struct mulle_buffer_stdio_functions *functions,
+                              void *handle)
+{
+   (*functions->fputs)( "Hello", handle);
+   (*functions->fputc)( '\n', handle);
+}
+
+int   main( void)
+{
+   struct mulle_buffer   buffer;
+
+   // write to stdout via FILE *
+   write_greeting( &mulle_stdio_functions, stdout);
+
+   // write to a mulle_buffer
+   mulle_buffer_init_with_capacity( &buffer, 64, NULL);
+   write_greeting( &mulle_buffer_functions, &buffer);
+   mulle_printf( "buffer contains: %.*s",
+                 (int) mulle_buffer_get_length( &buffer),
+                 mulle_buffer_get_bytes( &buffer));
+   mulle_buffer_done( &buffer);
+
+   return( 0);
+}
+```
+
+### Cross-platform fmemopen
+
+``` c
+#include <mulle-core/mulle-core.h>
+
+int   main( void)
+{
+   char   buf[ 64] = "Hello World";
+   void   *stream;
+
+   stream = mulle_buffer_fmemopen( buf, sizeof( buf), "r+");
+   mulle_buffer_fputc( 'J', stream);
+   mulle_buffer_fclose( stream);
+
+   mulle_printf( "%s\n", buf);  // "Jello World"
+   return( 0);
+}
+```
+
+### Reading a file into a buffer
+
+``` c
+#include <mulle-core/mulle-core.h>
+
+int   main( void)
+{
+   mulle_buffer_do_filepath( buffer, "example.txt", MULLE_BUFFER_IS_TEXT)
+   {
+      mulle_printf( "%.*s",
+                    (int) mulle_buffer_get_length( buffer),
+                    mulle_buffer_get_bytes( buffer));
+   }
+   return( 0);
+}
+```
