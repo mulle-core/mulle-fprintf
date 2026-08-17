@@ -1,10 +1,48 @@
 ## API
 
+### Printf to FILE
+
 | Function         | Description
 |------------------|-------------
 | `mulle_printf`   | Like [printf](//www.cplusplus.com/reference/cstdio/printf/) prints to **stdout**
 | `mulle_vprintf`  | `<stdarg.h>` variant of `mulle_printf`
 | `mulle_fprintf`  | Prints to `FILE`
 | `mulle_vfprintf` | `<stdarg.h>` variant of `mulle_fprintf`
+| `mulle_mvfprintf`| `mulle_vararg_list` variant of `mulle_fprintf`
+| `mulle_mvprintf` | `mulle_vararg_list` variant of `mulle_printf`
 
+### Stdio-compatible mulle_buffer I/O
+
+These functions implement a stdio-like interface on `mulle_buffer`, allowing
+code to work with either `FILE *` or `mulle_buffer *` via function pointers:
+
+| Function                   | Description
+|----------------------------|-------------
+| `mulle_buffer_fmemopen`    | Cross-platform `fmemopen` replacement using `mulle_buffer`
+| `mulle_buffer_fclose`      | Close and destroy a buffer opened with `mulle_buffer_fmemopen`
+| `mulle_buffer_fread`       | Read from buffer (fread compatible)
+| `mulle_buffer_fwrite`      | Write to buffer (fwrite compatible)
+| `mulle_buffer_fgetc`       | Read a character from buffer
+| `mulle_buffer_fputc`       | Write a character to buffer
+| `mulle_buffer_fputs`       | Write a string to buffer
+| `mulle_buffer_fseek`       | Seek within buffer
+| `mulle_buffer_ftell`       | Get current position in buffer
+| `mulle_buffer_fflush`      | Flush buffer (appends NUL in text mode)
+| `mulle_buffer_stdio_lseek`  | `off_t`-based seek variant (stdio adapter)
+
+### Vtables for polymorphic I/O
+
+| Variable                   | Description
+|----------------------------|-------------
+| `mulle_stdio_functions`    | Function table dispatching to real `FILE *` stdio
+| `mulle_buffer_functions`   | Function table dispatching to `mulle_buffer` functions
+
+### File reading into mulle_buffer
+
+| Function                          | Description
+|-----------------------------------|-------------
+| `mulle_buffer_init_with_filepath` | Read a file into a buffer
+| `mulle_buffer_fread_FILE`         | Read N bytes from `FILE` into buffer
+| `mulle_buffer_fread_FILE_all`     | Read entire `FILE` into buffer
+| `mulle_buffer_do_filepath`        | RAII-style macro for file reading
 

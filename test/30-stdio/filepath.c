@@ -4,9 +4,9 @@
 #include <unistd.h>
 
 
-static const char *errno_name(int err)
+static const char   *errno_name( int err)
 {
-   switch(err)
+   switch( err)
    {
    case 0       : return( "0");
    case ENOENT  : return( "ENOENT");
@@ -25,7 +25,7 @@ static void   example( void)
    char                  *s;
    int                   rval;
 
-   rval = mulle_buffer_init_with_filepath( &buffer, 
+   rval = mulle_buffer_init_with_filepath( &buffer,
                                            "filepath.c",
                                            MULLE_BUFFER_IS_TEXT,
                                            NULL);
@@ -49,10 +49,10 @@ static int   test_nonexistent( void)
    int                   rval;
 
    fprintf( stderr, "Testing nonexistent file...\n");
-   rval = mulle_buffer_init_with_filepath( &buffer, 
-                                          "testdir/nosuchfile.txt",
-                                          MULLE_BUFFER_IS_TEXT,
-                                          NULL);
+   rval = mulle_buffer_init_with_filepath( &buffer,
+                                           "testdir/nosuchfile.txt",
+                                           MULLE_BUFFER_IS_TEXT,
+                                           NULL);
    fprintf( stderr, "Got status=%d, errno=%s\n", (rval != 0), errno_name(errno));
    mulle_buffer_done( &buffer);
 
@@ -67,22 +67,27 @@ static int   test_nonexistent( void)
 
 static int   test_empty( void)
 {
-   FILE                  *fp;
    struct mulle_buffer   buffer;
    int                   rval;
 
+   // an empty, readable file must load successfully with length 0
    rval = mulle_buffer_init_with_filepath( &buffer,
-                                          "testdir/empty.txt",
-                                          MULLE_BUFFER_IS_TEXT,
-                                          NULL);
+                                           "testdir/empty.txt",
+                                           MULLE_BUFFER_IS_TEXT,
+                                           NULL);
    fprintf( stderr, "Got status=%d, errno=%s\n", (rval != 0), errno_name(errno));
 
    if( rval)  // should succeed
-      return( 0);  // Changed: empty file is allowed to fail
+   {
+      fprintf( stderr, "Failed: Empty file should load successfully\n");
+      mulle_buffer_done( &buffer);
+      return( 1);
+   }
 
    if( mulle_buffer_get_length( &buffer))  // should be empty
    {
       fprintf( stderr, "Failed: Empty file had non-zero length\n");
+      mulle_buffer_done( &buffer);
       return( 1);
    }
 
@@ -93,7 +98,6 @@ static int   test_empty( void)
 
 static int   test_no_permission( void)
 {
-   FILE                  *fp;
    struct mulle_buffer   buffer;
    int                   rval;
 
@@ -123,10 +127,10 @@ static int   test_directory( void)
    struct mulle_buffer   buffer;
    int                   rval;
 
-   rval = mulle_buffer_init_with_filepath( &buffer, 
-                                          "testdir", 
-                                          MULLE_BUFFER_IS_TEXT,
-                                          NULL);
+   rval = mulle_buffer_init_with_filepath( &buffer,
+                                           "testdir",
+                                           MULLE_BUFFER_IS_TEXT,
+                                           NULL);
    fprintf( stderr, "Got status=%d, errno=%s\n", (rval != 0), errno_name(errno));
    mulle_buffer_done( &buffer);
 
@@ -145,7 +149,7 @@ static int   test_null( void)
    int                   rval;
 
    fprintf( stderr, "Testing NULL filepath...\n");
-   rval = mulle_buffer_init_with_filepath( &buffer, 
+   rval = mulle_buffer_init_with_filepath( &buffer,
                                            NULL,
                                            MULLE_BUFFER_IS_TEXT,
                                            NULL);

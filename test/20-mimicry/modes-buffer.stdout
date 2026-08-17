@@ -31,18 +31,18 @@ res1 -1: EINVAL
 off 0
 res1 88: Success
 off 1
-res1 -1: ENOSPC
-off 1
-s: "X"
+res1 0: Success
+off 11
+s: "XfL Bochum 1848"
 ---------------- a+ ----------------
 off 11
 res1 0: Success
 off 9
 res1 88: Success
 off 10
-res1 -1: ENOSPC
-off 10
-s: "VfL BochuX"
+res1 0: Success
+off 11
+s: "VfL BochuX 1848"
 ---------------- r+ ----------------
 off 0
 res1 -1: EINVAL

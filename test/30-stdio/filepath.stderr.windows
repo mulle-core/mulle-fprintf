@@ -2,9 +2,9 @@ Starting tests...
 Testing nonexistent file...
 Got status=1, errno=ENOENT
 test_nonexistent passed
-Got status=0, errno=UNKNOWN
+Got status=0, errno=0
 test_empty passed
-Got status=0, errno=UNKNOWN
+Got status=0, errno=0
 test_no_permission passed
 Got status=1, errno=EISDIR
 test_directory passed
