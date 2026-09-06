@@ -5,10 +5,22 @@
 See [mulle-sprintf](//github.com/mulle-core/mulle-sprintf) for details about
 the supported conversions.
 
-mulle-fprintf also provides a cross-platform stdio-compatible interface on
-`mulle_buffer`, including a portable `fmemopen` replacement that works on
-macOS and Windows. Use `mulle_stdio_functions` and `mulle_buffer_functions`
-vtables to write I/O code that works with either `FILE *` or `mulle_buffer *`.
+## Streaming printf, zero heap allocation
+
+`mulle_printf`, `mulle_fprintf`, `mulle_vfprintf`, and `mulle_mvfprintf` pipe
+the full power of the mulle-sprintf formatting engine straight to your
+`FILE *` — through a stack-backed flushable buffer. No heap churn, no
+arbitrary-size limits, no dribbling bytes: output is buffered on the stack and
+flushed in one batched `fwrite`. Write as much as you like; the streaming
+design keeps it allocation-free and fast.
+
+## One API for `FILE *` and `mulle_buffer *`
+
+mulle-fprintf ships a stdio-compatible interface on `mulle_buffer` — including
+a portable `fmemopen` replacement that works on macOS and Windows. Use the
+`mulle_stdio_functions` and `mulle_buffer_functions` vtables to write I/O code
+**once** and run it against a real `FILE *` **or** an in-memory `mulle_buffer *`,
+unchanged. Perfect for testable, storage-agnostic code.
 
 
 
