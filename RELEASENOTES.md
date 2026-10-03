@@ -1,3 +1,11 @@
+### 0.4.1
+
+
+
+
+* `mulle_buffer` stdio functions now access the embedded `base` buffer struct instead of casting the handle directly
+* ``mulle_buffer_do_*`` stack storage macro updated to initialize the new nested layout
+
 ## 0.4.0
 
 
